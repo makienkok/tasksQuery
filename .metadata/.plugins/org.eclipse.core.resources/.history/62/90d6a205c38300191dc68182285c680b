@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+
+<configuration>
+	<settings>
+		<setting name="cacheEnabled" value="false"/>
+		<setting name="lazyLoadingEnabled" value="true"/>
+		<setting name="multipleResultSetsEnabled" value="false"/>
+		<setting name="useColumnLabel" value="true"/>
+		<setting name="useGeneratedKeys" value="false"/>
+		<setting name="autoMappingBehavior" value="PARTIAL"/>
+		<setting name="defaultExecutorType" value="SIMPLE"/>
+		<setting name="defaultStatementTimeout" value="25"/>
+		<setting name="defaultFetchSize" value="100"/>
+		<setting name="safeRowBoundsEnabled" value="false"/>
+		<setting name="localCacheScope" value="SESSION"/>
+		<setting name="jdbcTypeForNull" value="OTHER"/>
+	</settings>
+	<environments default="work">
+		<environment id="work">
+			<transactionManager type="JDBC"/>
+			<dataSource type="POOLED">
+				<property name="driver" value="com.mysql.jdbc.Driver"/>
+				
+				
+				<!-- settingfs for Nero Profile-->
+				<!-- <property name="url" value="jdbc:mysql://localhost:4040/market_next?encoding=UTF-8&amp;useUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true&amp;noAccessToProcedureBodies=true&amp;autoReconnectForPools=true"/> -->
+				
+				<!-- <property name="url" value="jdbc:mysql://10.3.0.241:3306/prodtonext"/> &amp;characterEncoding=utf8-->				
+				<property name="url" value="jdbc:mysql://10.3.0.241:3306/market_next?autoReconnect=true"/>
+				<property name="username" value="root"/>
+				<property name="password" value="7FRYT4U2aOmF7bcnaDB9"/>
+				
+				<!-- new compost -->
+				
+				<!-- <property name="url" value="jdbc:mysql://localhost:4040/market?encoding=UTF-8&amp;useUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true&amp;noAccessToProcedureBodies=true&amp;autoReconnectForPools=true"/> -->
+				<!-- <property name="url" value="jdbc:mysql://165.227.249.178:3306/market?autoReconnect=true"/>
+				<property name="username" value="estore"/>
+				<property name="password" value="sdfs5t@Dc67!Lkk"/> -->
+				
+				<property name="driver.encoding" value="UTF-8"/>
+				<property name="driver.characterEncoding" value="UTF-8"/>
+				<property name="driver.useUnicode" value="true"/>
+				<property name="driver.noAccessToProcedureBodies" value="true"/>				
+				<property name="poolPingQuery" value="/* ping */select 1"/>
+				<property name="poolPingEnabled" value="true"/>
+				<property name="poolMaximumActiveConnections" value="50"/>
+                <property name="poolMaximumIdleConnections" value="5" /> 
+                <property name="poolMaximumCheckoutTime" value="20000" /> 
+                <property name="poolTimeToWait" value="2000" />
+                <property name="poolPingConnectionsNotUsedFor" value="1000" /> 
+			</dataSource>
+		</environment>
+	</environments>
+	<mappers>
+		<mapper resource="org/Shop/map/common_SqlMap.xml" />		
+		<mapper resource="org/Shop/map/catalog_SqlMap.xml" />
+		<mapper resource="org/Shop/map/roles_SqlMap.xml" />
+		<mapper resource="org/Shop/map/users_SqlMap.xml" />
+		<mapper resource="org/Shop/map/permissions_SqlMap.xml" />
+		<mapper resource="org/Shop/map/rolepermissions_SqlMap.xml" />
+		<mapper resource="org/Shop/map/lists_SqlMap.xml" />
+		<mapper resource="org/Shop/map/pricegrid_SqlMap.xml" />
+		<mapper resource="org/Shop/map/cart_SqlMap.xml" />
+		<mapper resource="org/Shop/map/cartview_SqlMap.xml" />
+		<mapper resource="org/Shop/map/cardtransaction_SqlMap.xml" />
+		<mapper resource="org/Shop/map/country_SqlMap.xml" />
+		<mapper resource="org/Shop/map/states_SqlMap.xml" />
+		<mapper resource="org/Shop/map/payment_SqlMap.xml" />
+		<mapper resource="org/Shop/map/clients_SqlMap.xml" />
+		<mapper resource="org/Shop/map/Advertisement_SqlMap.xml" />
+		<mapper resource="org/Shop/map/cataloggroup_SqlMap.xml" />
+		<mapper resource="org/Shop/map/setview_SqlMap.xml" />
+		<mapper resource="org/Shop/map/compoundsTag_SqlMap.xml" />
+			
+	</mappers>
+
+</configuration>
+

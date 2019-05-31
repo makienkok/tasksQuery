@@ -1,0 +1,6 @@
+package com.tasksquery.config;
+
+public class SecurityConfig extends WebSecurityConfigurerAdapter
+{
+
+}

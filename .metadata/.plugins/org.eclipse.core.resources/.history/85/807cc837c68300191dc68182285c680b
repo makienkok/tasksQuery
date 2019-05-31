@@ -1,0 +1,14 @@
+package com.tasksquery.controllers;
+
+import org.springframework.stereotype.Controller;
+
+@Controller
+public class MainController {
+
+	@RequestMapping(value = "/", method = RequestMethod.GET)
+    public String indexController( Model model, @RequestParam(name = "p", required = false) String page_param) throws Exception
+    {
+		System.out.println("Hello");
+    }
+
+}

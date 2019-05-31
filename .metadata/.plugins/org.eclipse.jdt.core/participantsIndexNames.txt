@@ -1,0 +1,7 @@
+INDEX VERSION 1.131
+C:\Users\k.makienko\ws_queryTasks\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\3335553760.index
+\TasksQuery\src\main\resources
+C:\Users\k.makienko\ws_queryTasks\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\3357271619.index
+\TasksQuery\src\main\java
+C:\Users\k.makienko\ws_queryTasks\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\721543107.index
+\TasksQuery\src\main\java

@@ -1,0 +1,8 @@
+INDEX VERSION 1.4+C:\Users\k.makienko\ws_queryTasks\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
+4093466813.index
+1548629958.index
+3303969762.index
+596693859.index
+3879915819.index
+1092802472.index
+4144127181.index

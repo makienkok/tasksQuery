@@ -1,0 +1,5 @@
+package com.tasksquery.config;
+
+public class HebernateConfig {
+
+}

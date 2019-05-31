@@ -1,0 +1,6 @@
+EMAIL.smtp=mail.enamine.net
+EMAIL.usr=spectrs@mail.enamine.net
+EMAIL.psw=asdWWe32340IO
+EMAIL.from=spectrs@mail.enamine.net
+EMAIL.timeout=300000
+EMAIL.respToUpdateEmpls=k.maki

@@ -1,0 +1,51 @@
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+          http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+    version="3.0">
+    
+    <display-name>TasksQuery</display-name>
+     
+     <!-- Spring Database Configuration File -->
+    <context-param>
+		<param-name>contextClass</param-name>
+		<param-value>
+			org.springframework.web.context.support.AnnotationConfigWebApplicationContext
+		</param-value>
+	</context-param>
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value> com.tasksquery.config.CoreConfig, com.tasksquery.config.HibernateConfig, com.tasksquery.config.SecurityConfig, com.tasksquery.config.WebConfig</param-value>
+	</context-param>
+	
+     
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+     
+     
+    <!-- Spring Configuration - Processes Application Requests -->
+    <servlet>
+        <servlet-name>SpringController</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value></param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    
+
+    
+    <servlet-mapping>
+        <servlet-name>SpringController</servlet-name>
+        <url-pattern>/*</url-pattern>
+    </servlet-mapping>
+     
+    
+     
+    <!-- Welcome File List -->
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+</web-app>

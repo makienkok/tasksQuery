@@ -1,0 +1,114 @@
+EMAIL.smtp=mail.enamine.net
+EMAIL.usr=spectrs@mail.enamine.net
+EMAIL.psw=asdWWe32340IO
+EMAIL.from=spectrs@mail.enamine.net
+EMAIL.timeout=300000
+EMAIL.respToUpdateEmpls=k.makienko@mail.enamine.net
+EMAIL.discovery_request_us_region=k.makienko@mail.enamine.net
+#EMAIL.discovery_request_eu_region=k.makienko@mail.enamine.net
+#EMAIL.discovery_request_eu_region=k.makienko@mail.enamine.net,boris.kesarev@mail.enamine.net
+EMAIL.discovery_request_as_region=k.makienko@mail.enamine.net
+EMAIL.mainUrl=http://enaminetest.com/
+DISCOVERY.Email1=a.buvailo@enamine.net
+DISCOVERY.Email=info@enaminestore.com
+
+_FIRSTDT.Mode=Live
+_FIRSTDT.ClientCertificatePath=D:\ENAMINE\Shop\Src\Resources\1909950003.p12
+_FIRSTDT.Password=test
+_FIRSTDT.StoreNumber=1909950003
+_FIRSTDT.Host=staging.linkpt.net
+_FIRSTDT.Port=1129
+
+INJECT.CMD=c:\test.bat %1 %2 
+
+FIRSTDT.Mode=Good
+FIRSTDT.ClientCertificatePath=D:\Web\Shop\Src\Resources\1001200363.p12
+FIRSTDT.ClientCertificatePath_LV=D:\Web\Shop\Src\Resources\3203478_keystore.jks
+FIRSTDT.Password=live
+FIRSTDT.Password_LV=v'qyc[tvf
+FIRSTDT.StoreNumber=1001200363
+FIRSTDT.Host=secure.linkpt.net
+FIRSTDT.Port=1129
+FIRSTDT.merchant_properties=D:\Web\Shop\Src\Resources\merchant.properties
+
+CURR.proxy_ip_port=
+_CURRUnuseful.proxy_ip_port=10.3.80.80:3128
+_CURR.proxy_ip_port=
+CURR.url=https://forex.1forge.com/1.0.3/
+CURR.apikey=R8Npza8LNaiRNIho69jH4ZRaG1JrN9B2
+
+CURR.url=https://forex.1forge.com/1.0.3/
+CURR.apikey=R8Npza8LNaiRNIho69jH4ZRaG1JrN9B2
+
+
+
+PUNCHOUT.Secret=enamine123456
+PUNCHOUT.xmldumppath=./logs/punchout/
+PUNCHOUT.reqdumppath=./logs/punchoutReq/
+
+COMMON1.originalexeption=
+
+CATALOGXML.xmldumppath=./logs/CatalogXml/
+CATALOGXML.Secret=9xcJKbRxYEoT
+#CATALOGXML.Secret=test
+
+1UPDATER.matrixURL1=https://enamine.enamine.net/
+UPDATER.matrixURL=https://localhost:8443
+UPDATER.authKey=fa3e34d7
+UPDATER.timeout=180000
+
+
+SWIPE.pubKey=ed5db9e63a73bf6304acaa47085dd6af
+SWIPE.privKey=0a472b2ad6e6d82c803d9abb5b9fc60b841460a419aefb6ebbc79cd90ae10b1b
+SWIPE.clientEmail=a.buvailo@enamine.net
+SWIPE.mainUrl=https://swipe.lv
+SWIPE.timeout=30000
+
+DECTA.testpubKey=ed5db9e63a73bf6304acaa47085dd6af
+DECTA.testprivKey=0a472b2ad6e6d82c803d9abb5b9fc60b841460a419aefb6ebbc79cd90ae10b1b
+DECTA.pubKey=92faff84990908704a5cfc30dbaffc65
+DECTA.privKey=4a2b3b6be3942c88e171661d2dcc16338988e50045c3f0f3d0420f1bb1f4af0e
+DECTA.clientEmail=a.buvailo@enamine.net
+DECTA.mainUrl=https://gate.decta.com/api/v0.6
+DECTA.timeout=30000
+DECTA.isTest=true
+
+Jchem.tableBB=jsmiles_bb_dev
+Jchem.tableSC=jsmiles_sc_dev
+
+Jchem.search_param=alcohol,aldehyde,aliphatic_amine,alkyl_halide,aniline,aromatic_hetero,aryl_halide,azide,carboxylic_acid,ketone,primary_amine,secondary_amine
+
+AUTH_API.key=123
+
+BFC.sheetnames=all_functional-compounds-templa,price USD,Therapeutic areas,targets
+
+MAILCHIMP.mainUrl=https://us11.api.mailchimp.com/3.0
+# old key MAILCHIMP.authKey=apikey 7fd08814bdbfa736f2c8f052d57b5442-us11
+MAILCHIMP.authKey=apikey 63ff64f6d411b97bfad72eff8a8431ef-us11
+MAILCHIMP.timeout=30000
+#production MAILCHIMP.listid=c9c54d2724
+# developer list MAILCHIMP.listid=1a52e760ef
+#Oleg MAILCHIMP.listid=85bcb5c44d
+MAILCHIMP.listid=85bcb5c44d
+# production MAILCHIMP.BUILDING_BLOCKS=ef586289ea
+# production MAILCHIMP.SCREENING_COMPOUND_LIBRIARY=7b8a301f86
+# production MAILCHIMP.BIOREFERENCE_COMPOUNDS=69f73077ec
+# production MAILCHIMP.CHEMICAL_BIOLOGY_SERVICES=9147f06113
+# production MAILCHIMP.COMPANY_NEWS_ANNOUNCEMENTS=0e49bf9aa3
+#test list 1
+MAILCHIMP.BUILDING_BLOCKS=73b3af2ab8
+MAILCHIMP.SCREENING_COMPOUND_LIBRIARY=6bb27420b6
+MAILCHIMP.BIOREFERENCE_COMPOUNDS=7d226256ab
+MAILCHIMP.CHEMICAL_BIOLOGY_SERVICES=21799ce504
+MAILCHIMP.COMPANY_NEWS_ANNOUNCEMENTS=1faa21fece
+
+#test list 2
+#categoriesMail = new HashMap<EmailSubscriptionService.MailSubscribeCategories, String>()
+#categoriesMail.put(MailSubscribeCategories.BUILDING_BLOCKS, "a7a2e7db86")
+#categoriesMail.put(MailSubscribeCategories.SCREENING_COMPOUND_LIBRIARY, "68e7be4ecc")
+#categoriesMail.put(MailSubscribeCategories.BIOREFERENCE_COMPOUNDS, "c83565093a")
+
+
+
+#test2 DECTA.pubKey=0c82ab4050cd5d7526779ffd8d3b4056
+#test2 DECTA.privKey=0402ab9273fdd098644132d1e999c2878a204480a26d9d00f30318d87e494de3

@@ -1,0 +1,10 @@
+package com.tasksquery.controllers;
+
+@Controller
+public class MainController {
+
+	
+
+
+
+}

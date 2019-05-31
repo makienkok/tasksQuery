@@ -1,0 +1,5 @@
+com\tasksquery\config\HibernateConfig.class
+com\tasksquery\config\SecurityConfig.class
+com\tasksquery\config\CoreConfig.class
+com\tasksquery\controllers\MainController.class
+com\tasksquery\config\WebConfig.class
