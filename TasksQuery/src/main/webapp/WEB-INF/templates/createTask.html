@@ -1,0 +1,53 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<h2>Create task</h2>
+<p>There you could create own task.</p>
+</body>
+	<div th:if="${username == 'admin'}">
+	    authenticated as <div th:text="${username}"/>
+	    <form th:action="@{/loginPage?logout}" method="post"/>    
+	</div>
+	<div>
+		<form th:action="@{/createTask}" method="post">
+		<table>
+			<tr>
+				<td>
+					<th:label>Name</th:label>
+				</td>
+				<td>
+					 <input th:type="text" th:id="username" th:name="username"/> <br />
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<th:label>Email</th:label>
+				</td>
+				<td>
+					 <input th:type="email" th:id="email" th:name="email" />
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<th:label>Description</th:label>
+				</td>
+				<td>
+					 <input th:type="text" th:id="description" th:name="description" />
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<th:label>Picture</th:label>
+				</td>
+				<td>
+					 <input th:type="file" th:id="picture" th:name="picture" />
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<input th:type="submit" th:id="submit" th:value="Submit" />
+				</td>
+			</tr>
+		</table>
+		</form>
+	</div>
+</html>
