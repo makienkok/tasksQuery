@@ -9,34 +9,34 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter
 {
 
-	/*
-	 * @Autowired private MyBasicAuthenticationEntryPoin authenticationEntryPoint;
-	 */
- 
     @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-          .withUser("admin").password(passwordEncoder().encode("123"))
-          .authorities("ROLE_USER");
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception 
+    {        
+        auth.inMemoryAuthentication().withUser("admin")
+        	.password(passwordEncoder().encode("123")).roles("ADMIN");
     }
  
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        
         http.authorizeRequests()
-          .antMatchers("/test").permitAll()
-          .anyRequest().authenticated()
-          .and()
-          .httpBasic();
-          //.authenticationEntryPoint(authenticationEntryPoint);
- 
-        //http.addFilterAfter(new CustomFilter(), 	BasicAuthenticationFilter.class);
+				.antMatchers("/tasksQuery", "/welcome", "/createTask")
+				.access("hasRole('ADMIN') or hasRole('ANONYMOUS')")/* anonymous() */ 
+		.antMatchers("/submitTasks").access("hasRole('ADMIN')")
+		.and()
+			.formLogin().loginPage("/loginPage")
+			.defaultSuccessUrl("/tasksQuery")
+			.failureUrl("/loginPage?error")
+			.usernameParameter("username").passwordParameter("password")				
+		.and()
+			.logout().logoutSuccessUrl("/loginPage?logout"); 
+        
     }
  
     @Bean
