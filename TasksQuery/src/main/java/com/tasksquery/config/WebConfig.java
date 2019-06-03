@@ -20,7 +20,7 @@ import org.thymeleaf.templatemode.TemplateMode;
 @Configuration
 @EnableWebMvc
 @EnableSpringDataWebSupport
-@ComponentScan("com.tasksquery.controllers")
+@ComponentScan("com.tasksquery")
 public class WebConfig implements WebMvcConfigurer 
 {
     

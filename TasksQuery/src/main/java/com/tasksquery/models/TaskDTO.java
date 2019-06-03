@@ -1,28 +1,18 @@
 package com.tasksquery.models;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import org.springframework.web.multipart.MultipartFile;
 
-@Entity
-@Table(name = "tasks")
-public class Task implements java.io.Serializable
+public class TaskDTO
 {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
-	@Column(name = "users_name")
+
 	private String userName;
-	@Column(name = "users_email")
+
 	private String userEmail;
 
 	private String description;
 
-	private byte[] img;
+	private MultipartFile img;
 
 	public Integer getId()
 	{
@@ -64,14 +54,26 @@ public class Task implements java.io.Serializable
 		this.description = description;
 	}
 
-	public byte[] getImg()
+	public MultipartFile getImg()
 	{
 		return img;
 	}
 
-	public void setImg(byte[] img)
+	public void setImg(MultipartFile img)
 	{
 		this.img = img;
+	}
+
+	public void convertDtoToEntity(Task taskEntity)
+	{
+		if (taskEntity != null)
+		{
+			taskEntity.setUserName(getUserName());
+			taskEntity.setUserEmail(getUserEmail());
+			taskEntity.setDescription(getDescription());
+
+		}
+
 	}
 
 }

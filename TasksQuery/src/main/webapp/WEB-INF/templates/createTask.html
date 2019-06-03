@@ -5,17 +5,17 @@
 </body>
 	<div th:if="${username == 'admin'}">
 	    authenticated as <div th:text="${username}"/>
-	    <form th:action="@{/loginPage?logout}" method="post"/>    
+	    <form th:action="@{/loginPage?logout}" method="post" enctype="multipart/form-data"/>    
 	</div>
 	<div>
-		<form th:action="@{/createTask}" method="post">
+		<form  action="#" th:action="@{/createTask}" th:object="${taskDTO}" method="post">
 		<table>
 			<tr>
 				<td>
 					<th:label>Name</th:label>
 				</td>
 				<td>
-					 <input th:type="text" th:id="username" th:name="username"/> <br />
+					 <input th:type="text" id="name" th:field="*{userName}"/> <br />
 				</td>
 			</tr>
 			<tr>
@@ -23,7 +23,7 @@
 					<th:label>Email</th:label>
 				</td>
 				<td>
-					 <input th:type="email" th:id="email" th:name="email" />
+					 <input th:type="email" id="enail" th:field="*{userEmail}" />
 				</td>
 			</tr>
 			<tr>
@@ -31,7 +31,8 @@
 					<th:label>Description</th:label>
 				</td>
 				<td>
-					 <input th:type="text" th:id="description" th:name="description" />
+					<textarea rows="20" cols="80" id="description" th:field="*{description}" >
+	    			</textarea>
 				</td>
 			</tr>
 			<tr>
@@ -39,7 +40,7 @@
 					<th:label>Picture</th:label>
 				</td>
 				<td>
-					 <input th:type="file" th:id="picture" th:name="picture" />
+					 <input th:type="file" id="img" th:field="*{img}" />
 				</td>
 			</tr>
 			<tr>
