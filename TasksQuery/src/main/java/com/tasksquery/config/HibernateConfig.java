@@ -6,9 +6,11 @@ import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 //import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -19,8 +21,9 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
+@ComponentScan("com.tasksquery.models")
 @EnableTransactionManagement
-//@EnableJpaRepositorie("com.javaspringclub.repository")
+@EnableJpaRepositories("com.tasksquery.repositories")
 @PropertySource(value = {
     "classpath:/confs/application.properties"
 })
@@ -36,7 +39,7 @@ public class HibernateConfig
         lcemfb.setJpaVendorAdapter(getJpaVendorAdapter());
         lcemfb.setDataSource(dataSource());
         lcemfb.setPersistenceUnitName("myJpaPersistenceUnit");
-        lcemfb.setPackagesToScan("com.javaspringclub");
+        lcemfb.setPackagesToScan("com.tasksquery.models");
         lcemfb.setJpaProperties(hibernateProperties());
         return lcemfb;
     }

@@ -1,36 +1,66 @@
 package com.tasksquery.models;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-@Controller
-public class TasksController {
+@Entity
+@Table(name = "tasks")
+public class Task implements java.io.Serializable{
 
-	@RequestMapping(value = { "/tasksQuery"}, method = RequestMethod.GET)
-	public ModelAndView homePage()
-	{
-		ModelAndView model = new ModelAndView();
-		model.setViewName("tasksQuery");
-		return model;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Integer id;
+	@Column(name = "users_name")
+	private String userName;
+	@Column(name = "users_email")
+	private String userEmail;
+
+	private String description;
+
+	private byte[] img;
+
+	public Integer getId() {
+		return id;
 	}
-	
-	@RequestMapping(value = {"/createTask"}, method = RequestMethod.GET)
-	public ModelAndView userPage() 
-	{
-		ModelAndView model = new ModelAndView();
-		model.setViewName("createTask");
-		return model;
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
-	
-	@RequestMapping(value = {"/submitTasks"}, method = RequestMethod.GET)
-	public ModelAndView adminPage() {
-		ModelAndView model = new ModelAndView();
-		model.setViewName("submitTasks");
-		return model;
+
+	public String getUserName() {
+		return userName;
 	}
-	
-	
-	
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getUserEmail() {
+		return userEmail;
+	}
+
+	public void setUserEmail(String userEmail) {
+		this.userEmail = userEmail;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public byte[] getImg() {
+		return img;
+	}
+
+	public void setImg(byte[] img) {
+		this.img = img;
+	}
+
 }

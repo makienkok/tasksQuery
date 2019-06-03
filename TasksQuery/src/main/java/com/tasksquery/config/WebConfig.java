@@ -2,18 +2,16 @@ package com.tasksquery.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.http.MediaType;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
@@ -21,7 +19,8 @@ import org.thymeleaf.templatemode.TemplateMode;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan("com.enaminestore.punchout.controllers")
+@EnableSpringDataWebSupport
+@ComponentScan("com.tasksquery.controllers")
 public class WebConfig implements WebMvcConfigurer 
 {
     
@@ -96,17 +95,15 @@ public class WebConfig implements WebMvcConfigurer
         /*configurer.defaultContentType(MediaType.APPLICATION_XML)*/;
     }
 
-    @Bean
-    public MessageSource messageSource()
-    {
-        ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
-
-        messageSource.setBasenames("/WEB-INF/messages/messages");
-        messageSource.setUseCodeAsDefaultMessage(true);
-        messageSource.setDefaultEncoding("UTF-8");
-        // # -1 : never reload, 0 always reload
-        messageSource.setCacheSeconds(0);
-        return messageSource;
-    }
+	/*
+	 * @Bean public MessageSource messageSource() {
+	 * ReloadableResourceBundleMessageSource messageSource = new
+	 * ReloadableResourceBundleMessageSource();
+	 * 
+	 * messageSource.setBasenames("/WEB-INF/messages/messages");
+	 * messageSource.setUseCodeAsDefaultMessage(true);
+	 * messageSource.setDefaultEncoding("UTF-8"); // # -1 : never reload, 0 always
+	 * reload messageSource.setCacheSeconds(0); return messageSource; }
+	 */
 
 }
