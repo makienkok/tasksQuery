@@ -1,0 +1,56 @@
+<th:block th:include="layout:: page">
+	<div th:replace=":: content" style="width: 100%;"></div>
+</th:block>
+
+	<div th:fragment="content" style="width: 100%;">
+
+		<head>
+			<title>Preview task</title>
+		</head>
+		<body>
+		<h2>Task</h2>
+		</body>
+			<div>
+				<table>
+					<tr>
+						<td>
+							<th:label>Name</th:label>
+						</td>
+						<td>
+							 <div th:text="${task.userName}" id="nameV" />
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<th:label>Email</th:label>
+						</td>
+						<td>
+							 <div th:text="${task.userEmail}" id="emailV" /> <br />
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<th:label>Description</th:label>
+						</td>
+						<td>
+							<textarea rows="20" cols="80" id="descriptionV" th:text="${task.description}"/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<th:label>Picture</th:label>
+						</td>
+						<td>
+							<img th:src="${task.img}" id="imgV" />
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							<button type="submit" id="save">Save</button>
+						</td>
+					</tr>
+				</table>
+				</form>
+			</div>
+	</div>
+

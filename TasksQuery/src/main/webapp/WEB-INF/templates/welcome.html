@@ -1,36 +1,11 @@
-<html xmlns:th="http://www.thymeleaf.org">
-<body>
-<h2>Wellcome to tasks query websilte</h2>
-<p>There you could publish any tasks for everyone.</p>
-<table>
-	<tr>
-		<td colspan="3">
-			
-			<div th:if="${username == 'admin'}">
-			    authenticated as <div th:text="${username}"/>
-			    <form th:action="@{/loginPage?logout}" method="post">
-			    	<input type="submit" value="Log out" /> 
-				</form>    
-			</div>
-			<div th:if="${username != 'admin'}">
-					<a href="/loginPage">Login</a>
-				</div>
-			
-		</td>
-	</tr>
-	<tr>
-		<td>
-			<a href="/tasksQuery">Tasks Query page</a>
-		</td>
-		<td>
-			<a href="/createTask">Create Task</a>
-		</td>
-		<td>
-			<a href="submitTasks">submit Tasks</a>
-		</td>
-	</tr>
-</table>
+
+<th:block th:include="layout:: page">
+	<div th:replace=":: content" style="width: 100%;"></div>
+</th:block>
+
+<div th:fragment="content" style="width: 100%;">
+	<h2>Wellcome to tasks query websilte</h2>
+	<p>There you could publish any tasks for everyone.</p>
+</div>
 
 
-</body>
-</html>

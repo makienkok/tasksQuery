@@ -1,54 +1,93 @@
-<html xmlns:th="http://www.thymeleaf.org">
-<body>
-<h2>Create task</h2>
-<p>There you could create own task.</p>
-</body>
-	<div th:if="${username == 'admin'}">
-	    authenticated as <div th:text="${username}"/>
-	    <form th:action="@{/loginPage?logout}" method="post" enctype="multipart/form-data"/>    
+<th:block th:include="layout:: page">
+	<div th:replace=":: content" style="width: 100%;"></div>
+</th:block>
+
+	<div th:fragment="content" style="width: 100%;">
+
+		<head>
+			<script th:inline="javascript">
+		                /*<![CDATA[*/
+		                	
+		               	 $(function() {
+		               		 $("#save").click(function(event) {
+		                         //stop submit the form, we will post it manually.
+		                         event.preventDefault();
+		                         Save();
+		                     });  
+		               	 });
+		                function Save() {				    
+		                	
+		                	$("#createTask").submit(function () {
+		                	      var formData = new FormData(this);
+		                	      $.ajax({
+		                	          url: '/createTask',
+		                	          type: 'POST',
+		                	          data: formData,
+		                	          async: false,
+		                	          cache: false,
+		                	          contentType: false,
+		                	          processData: false,
+		                	          success: function () {
+		                	              alert('Form Submitted!');
+		                	          },
+		                	          error: function(){
+		                	              alert("error in ajax form submission");
+		                	          }
+		                	      });
+		                	      return false;
+		                	  });
+						}
+		                
+		                /*]]>*/
+		            </script>
+		</head>
+		<body>
+		<h2>Create task</h2>
+		<p>There you could create own task.</p>
+		</body>
+			<div>
+				<form th:action="@{/createTask}" th:object="${taskDTO}" id="createTask">
+				<table>
+					<tr>
+						<td>
+							<th:label>Name</th:label>
+						</td>
+						<td>
+							 <input th:type="text" id="name" th:field="*{userName}"/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<th:label>Email</th:label>
+						</td>
+						<td>
+							 <input th:type="email" id="email" th:field="*{userEmail}" />
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<th:label>Description</th:label>
+						</td>
+						<td>
+							<textarea rows="20" cols="80" id="description" th:field="*{description}" >
+			    			</textarea>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<th:label>Picture</th:label>
+						</td>
+						<td>
+							 <input th:type="file" id="img" th:field="*{img}" />
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							<button type="submit" id="save">Save</button>
+						</td>
+					</tr>
+				</table>
+				</form>
+			</div>
 	</div>
-	<div>
-		<form  action="#" th:action="@{/createTask}" th:object="${taskDTO}" method="post">
-		<table>
-			<tr>
-				<td>
-					<th:label>Name</th:label>
-				</td>
-				<td>
-					 <input th:type="text" id="name" th:field="*{userName}"/> <br />
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<th:label>Email</th:label>
-				</td>
-				<td>
-					 <input th:type="email" id="enail" th:field="*{userEmail}" />
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<th:label>Description</th:label>
-				</td>
-				<td>
-					<textarea rows="20" cols="80" id="description" th:field="*{description}" >
-	    			</textarea>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<th:label>Picture</th:label>
-				</td>
-				<td>
-					 <input th:type="file" id="img" th:field="*{img}" />
-				</td>
-			</tr>
-			<tr>
-				<td colspan="2">
-					<input th:type="submit" th:id="submit" th:value="Submit" />
-				</td>
-			</tr>
-		</table>
-		</form>
-	</div>
-</html>
+

@@ -1,0 +1,45 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:fragment="page">
+	<head>
+	    <title text="Tasks Query">Title</title>
+	
+	    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=10" />
+	
+	    <link href="/css/site.css" rel="stylesheet" type="text/css" />
+	    <script src="/scripts/jquery-1.9.0.min.js"></script>
+	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	    <script type="text/javascript">
+	    </script>
+	</head>
+	<body>
+		<div>
+			<h1>Tasks Query</h1>
+			<table id="layout">
+				<tr>
+					<td colspan="3"  style="text-align:-webkit-right">
+						<div th:if="${username == 'admin'}" style="margin: 2px;">
+						    authenticated as <div th:text="${username}"/>
+						    <form th:action="@{/loginPage?logout}" method="post">
+						    	<input type="submit" value="Log out" /> 
+							</form>
+						</div>
+						<div th:if="${username != 'admin'}">
+								<a href="/loginPage">Login</a>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<a href="/tasksQuery">Tasks Query page</a>
+					</td>
+					<td>
+						<a href="/createTask">Create Task</a>
+					</td>
+					<td>
+						<a href="submitTasks">submit Tasks</a>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</body>
+</html>
