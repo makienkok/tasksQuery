@@ -5,48 +5,16 @@
 	<div th:fragment="content" style="width: 100%;">
 
 		<head>
-			<script th:inline="javascript">
-		                /*<![CDATA[*/
-		                	
-		               	 $(function() {
-		               		 $("#save").click(function(event) {
-		                         //stop submit the form, we will post it manually.
-		                         event.preventDefault();
-		                         Save();
-		                     });  
-		               	 });
-		                function Save() {				    
-		                	
-		                	$("#createTask").submit(function () {
-		                	      var formData = new FormData(this);
-		                	      $.ajax({
-		                	          url: '/createTask',
-		                	          type: 'POST',
-		                	          data: formData,
-		                	          async: false,
-		                	          cache: false,
-		                	          contentType: false,
-		                	          processData: false,
-		                	          success: function () {
-		                	              alert('Form Submitted!');
-		                	          },
-		                	          error: function(){
-		                	              alert("error in ajax form submission");
-		                	          }
-		                	      });
-		                	      return false;
-		                	  });
-						}
-		                
-		                /*]]>*/
-		            </script>
+			
 		</head>
 		<body>
 		<h2>Create task</h2>
 		<p>There you could create own task.</p>
 		</body>
 			<div>
-				<form th:action="@{/createTask}" th:object="${taskDTO}" id="createTask">
+				
+				<form action="#" th:action="@{/createTask}" th:object="${taskDTO}" id="task"  th:method="post" enctype="multipart/form-data">
+				
 				<table>
 					<tr>
 						<td>
@@ -83,6 +51,7 @@
 					</tr>
 					<tr>
 						<td colspan="2">
+							<input type="submit" value="upload" />
 							<button type="submit" id="save">Save</button>
 						</td>
 					</tr>

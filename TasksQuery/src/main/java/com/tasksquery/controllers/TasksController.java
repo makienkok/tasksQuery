@@ -10,9 +10,11 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.tasksquery.models.Task;
@@ -41,15 +43,17 @@ public class TasksController extends BaseController
 
 	@RequestMapping(value = { "/createTask" }, method = RequestMethod.GET)
 	public ModelAndView getNewTaskForm(Model model) {
-		model.addAttribute(new TaskDTO());
+		model.addAttribute("taskDTO", new TaskDTO());
 		ModelAndView modelView = new ModelAndView();
 		modelView.setViewName("createTask");
 		return modelView;
 	}
 
 	@RequestMapping(value = { "/createTask" }, method = RequestMethod.POST)
-	public String submitNewTask(@ModelAttribute TaskDTO taskDTO) {
+	public @ResponseBody Object submitNewTask(@ModelAttribute(name = "taskDTO") TaskDTO taskDTO,  BindingResult bindingResult, Model model) {
+		
 		Task taskEntity = new Task();
+		
 		taskDTO.convertDtoToEntity(taskEntity);
 
 		service.saveTask(taskEntity);

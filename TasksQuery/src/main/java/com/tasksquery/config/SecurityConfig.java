@@ -27,7 +27,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
         
         http.authorizeRequests()
 				.antMatchers("/tasksQuery", "/welcome", "/createTask")
-				.access("hasRole('ADMIN') or hasRole('ANONYMOUS')")/* anonymous() */ 
+				.access("hasRole('ADMIN') or hasRole('ANONYMOUS')") 
 		.antMatchers("/submitTasks").access("hasRole('ADMIN')")
 		.and()
 			.formLogin().loginPage("/loginPage")
@@ -37,6 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
 		.and()
 			.logout().logoutSuccessUrl("/loginPage?logout"); 
         
+        http.cors().and().csrf().disable();
     }
  
     @Bean

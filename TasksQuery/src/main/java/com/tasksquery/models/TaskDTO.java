@@ -1,8 +1,10 @@
 package com.tasksquery.models;
 
+import java.io.Serializable;
+
 import org.springframework.web.multipart.MultipartFile;
 
-public class TaskDTO
+public class TaskDTO implements Serializable
 {
 	private Integer id;
 
@@ -13,6 +15,10 @@ public class TaskDTO
 	private String description;
 
 	private MultipartFile img;
+	
+	public TaskDTO() {
+	
+	}
 
 	public Integer getId()
 	{

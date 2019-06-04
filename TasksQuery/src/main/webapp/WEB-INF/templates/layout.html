@@ -9,6 +9,15 @@
 	    <script src="/scripts/jquery-1.9.0.min.js"></script>
 	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	    <script type="text/javascript">
+		    function isnull(obj) {
+		        return typeof(obj) == 'undefined' || obj == null || obj == '';
+		    }
+		    
+		    function nvl(obj, def) {
+		        if (isnull(obj) || obj == '' && obj != 0)
+		            return def;
+		        return obj;
+		    }
 	    </script>
 	</head>
 	<body>
