@@ -1,5 +1,7 @@
 package com.tasksquery.services.tasks;
 
+import java.util.Optional;
+
 import javax.transaction.Transactional;
 
 import org.slf4j.Logger;
@@ -42,6 +44,13 @@ public class TaskServiceImpl implements TaskService
 	public Page<Task> getPageTasks(Pageable pageable)
 	{
 		return repository.findAll(pageable);
+	}
+
+	@Override
+	public Task getTaskById(Integer taskId)
+	{
+		Optional<Task> result = repository.findById(taskId);
+		return result.isPresent() ? result.get() : null;
 	}
 
 }

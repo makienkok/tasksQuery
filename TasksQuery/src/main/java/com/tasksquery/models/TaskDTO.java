@@ -70,16 +70,30 @@ public class TaskDTO implements Serializable
 		this.img = img;
 	}
 
-	public void convertDtoToEntity(Task taskEntity)
+	public void convertDtoToEntity(Task taskEntity) throws Exception
 	{
 		if (taskEntity != null)
 		{
 			taskEntity.setUserName(getUserName());
 			taskEntity.setUserEmail(getUserEmail());
 			taskEntity.setDescription(getDescription());
+			taskEntity.setImg(getImg().getBytes());
 
 		}
 
 	}
 
+	public void convertEntityToDto(Task taskEntity)
+	{
+		if (taskEntity != null)
+		{
+			setUserName(taskEntity.getUserName());
+			setUserEmail(taskEntity.getUserEmail());
+			setDescription(taskEntity.getDescription());
+			//MultipartFile file = new 
+			//setImg(taskEntity.getImg());
+		}
+
+	}
+	
 }

@@ -10,10 +10,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -22,17 +22,21 @@ import com.tasksquery.models.TaskDTO;
 import com.tasksquery.services.tasks.TaskService;
 
 @Controller
-public class TasksController extends BaseController 
+public class TasksController extends BaseController
 {
 
 	@Autowired
 	private TaskService service;
 
-	@RequestMapping(value = { "/tasksQuery" }, method = RequestMethod.GET)
-	public String listTasks(@PageableDefault(size = 3, sort = "id") Pageable pageable, Model model) {
+	@RequestMapping(value = {
+			"/tasksQuery"
+	}, method = RequestMethod.GET)
+	public String listTasks(@PageableDefault(size = 3, sort = "id") Pageable pageable, Model model)
+	{
 		Page<Task> page = service.getPageTasks(pageable);
 		List<Sort.Order> sortOrders = page.getSort().stream().collect(Collectors.toList());
-		if (sortOrders.size() > 0) {
+		if (sortOrders.size() > 0)
+		{
 			Sort.Order order = sortOrders.get(0);
 			model.addAttribute("sortProperty", order.getProperty());
 			model.addAttribute("sortDesc", order.getDirection() == Sort.Direction.DESC);
@@ -41,19 +45,25 @@ public class TasksController extends BaseController
 		return "tasksQuery";
 	}
 
-	@RequestMapping(value = { "/createTask" }, method = RequestMethod.GET)
-	public ModelAndView getNewTaskForm(Model model) {
+	@RequestMapping(value = {
+			"/createTask"
+	}, method = RequestMethod.GET)
+	public ModelAndView getNewTaskForm(Model model)
+	{
 		model.addAttribute("taskDTO", new TaskDTO());
 		ModelAndView modelView = new ModelAndView();
 		modelView.setViewName("createTask");
 		return modelView;
 	}
 
-	@RequestMapping(value = { "/createTask" }, method = RequestMethod.POST)
-	public @ResponseBody Object submitNewTask(@ModelAttribute(name = "taskDTO") TaskDTO taskDTO,  BindingResult bindingResult, Model model) {
-		
+	@RequestMapping(value = {
+			"/createTask", "/submitTasks"
+	}, method = RequestMethod.POST)
+	public String submitNewTask(@ModelAttribute(name = "taskDTO") TaskDTO taskDTO) throws Exception
+	{
+
 		Task taskEntity = new Task();
-		
+
 		taskDTO.convertDtoToEntity(taskEntity);
 
 		service.saveTask(taskEntity);
@@ -61,12 +71,42 @@ public class TasksController extends BaseController
 		return "redirect:/tasksQuery";
 	}
 
-	@RequestMapping(value = { "/submitTasks" }, method = RequestMethod.GET)
-	public ModelAndView adminPage() {
+	@RequestMapping(value = {
+			"/taskView"
+	}, method = RequestMethod.GET)
+	public ModelAndView taskView(@RequestParam("id") Integer id)
+	{
+
 		ModelAndView model = new ModelAndView();
 		model.setViewName("submitTasks");
-		System.out.println("test");
+
+		Task taskEntity = service.getTaskById(id);
+		if (taskEntity == null)
+			model.addObject("error", "Task was not found");
+		else
+		{
+			TaskDTO taskDto = new TaskDTO();
+			taskDto.convertEntityToDto(taskEntity);
+		}
+
 		return model;
 	}
 
+	@RequestMapping(value = {
+			"/preViewTask"
+	}, method = RequestMethod.GET)
+	public @ResponseBody Object getPreViewTask(@RequestParam("id") Integer id)
+	{
+
+		// JsonbHttpMessageConverter
+		Task taskEntity = service.getTaskById(id);
+		if (taskEntity == null)
+			System.out.println("Error");// model.addObject("error", "Task was not found");
+		else
+		{
+			TaskDTO taskDto = new TaskDTO();
+			taskDto.convertEntityToDto(taskEntity);
+		}
+		return null;
+	}
 }
