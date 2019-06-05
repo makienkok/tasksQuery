@@ -53,6 +53,9 @@ public class WebConfig implements WebMvcConfigurer {
 		if (!registry.hasMappingForPattern("/pictures/**")) {
 			registry.addResourceHandler("/pictures/**").addResourceLocations("classpath:/pictures/");
 		}
+		if (!registry.hasMappingForPattern("/imgs/**")) {
+			registry.addResourceHandler("/imgs/**").addResourceLocations("classpath:/imgs/");
+		}
 	}
 
 	@Bean

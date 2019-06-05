@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;
@@ -11,6 +12,7 @@ import java.nio.file.Paths;
 
 import javax.imageio.ImageIO;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 public class ImgUtils {
@@ -84,8 +86,9 @@ public class ImgUtils {
 
 	}
 
-	public void getSaveImg(byte[] arr) throws IOException {
-
+	public static void saveImg(byte[] arr, String pathFileImg) throws IOException 
+	{
+		FileUtils.writeByteArrayToFile(new File(pathFileImg), arr);
 	}
 
 	public String getPathImg(byte[] arr) {

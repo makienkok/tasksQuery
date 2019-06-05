@@ -26,7 +26,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
     protected void configure(HttpSecurity http) throws Exception {
         
         http.authorizeRequests()
-				.antMatchers("/tasksQuery", "/welcome", "/createTask")
+				.antMatchers("/tasksQuery", "/welcome", "/createTask", "/imgs")
 				.access("hasRole('ADMIN') or hasRole('ANONYMOUS')") 
 		.antMatchers("/submitTasks").access("hasRole('ADMIN')")
 		.and()
