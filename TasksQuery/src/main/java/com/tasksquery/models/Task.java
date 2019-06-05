@@ -9,8 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "tasks")
-public class Task implements java.io.Serializable
-{
+public class Task implements java.io.Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -24,54 +23,65 @@ public class Task implements java.io.Serializable
 
 	private byte[] img;
 
-	public Integer getId()
-	{
+	private Integer state;
+
+	@Column(name = "name_img")
+	private String imgName;
+
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(Integer id)
-	{
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public String getUserName()
-	{
+	public String getUserName() {
 		return userName;
 	}
 
-	public void setUserName(String userName)
-	{
+	public void setUserName(String userName) {
 		this.userName = userName;
 	}
 
-	public String getUserEmail()
-	{
+	public String getUserEmail() {
 		return userEmail;
 	}
 
-	public void setUserEmail(String userEmail)
-	{
+	public void setUserEmail(String userEmail) {
 		this.userEmail = userEmail;
 	}
 
-	public String getDescription()
-	{
+	public String getDescription() {
 		return description;
 	}
 
-	public void setDescription(String description)
-	{
+	public void setDescription(String description) {
 		this.description = description;
 	}
 
-	public byte[] getImg()
-	{
+	public byte[] getImg() {
 		return img;
 	}
 
-	public void setImg(byte[] img)
-	{
+	public void setImg(byte[] img) {
 		this.img = img;
+	}
+
+	public Integer getState() {
+		return state;
+	}
+
+	public void setState(Integer state) {
+		this.state = state;
+	}
+
+	public String getImgName() {
+		return imgName;
+	}
+
+	public void setImgName(String imgName) {
+		this.imgName = imgName;
 	}
 
 }

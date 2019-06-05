@@ -8,6 +8,8 @@ create table tasks
 `users_email` varchar(256) NOT NULL,
 `description` longtext,
 `img` mediumblob NOT NULL,
+`name_img` varchar(500) NOT NULL,
+`state` int(1) NOT NULL DEFAULT 0,
 PRIMARY KEY (`id`)
 ) DEFAULT CHARSET=utf8;
 

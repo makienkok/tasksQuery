@@ -1,11 +1,8 @@
 package com.tasksquery.models;
 
-import java.io.Serializable;
-
 import org.springframework.web.multipart.MultipartFile;
 
-public class TaskDTO implements Serializable
-{
+public class TaskDTO {
 	private Integer id;
 
 	private String userName;
@@ -15,85 +12,94 @@ public class TaskDTO implements Serializable
 	private String description;
 
 	private MultipartFile img;
-	
+
+	private Boolean state;
+
+	private String nameImg;
+
 	public TaskDTO() {
-	
+
 	}
 
-	public Integer getId()
-	{
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(Integer id)
-	{
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public String getUserName()
-	{
+	public String getUserName() {
 		return userName;
 	}
 
-	public void setUserName(String userName)
-	{
+	public void setUserName(String userName) {
 		this.userName = userName;
 	}
 
-	public String getUserEmail()
-	{
+	public String getUserEmail() {
 		return userEmail;
 	}
 
-	public void setUserEmail(String userEmail)
-	{
+	public void setUserEmail(String userEmail) {
 		this.userEmail = userEmail;
 	}
 
-	public String getDescription()
-	{
+	public String getDescription() {
 		return description;
 	}
 
-	public void setDescription(String description)
-	{
+	public void setDescription(String description) {
 		this.description = description;
 	}
 
-	public MultipartFile getImg()
-	{
+	public MultipartFile getImg() {
 		return img;
 	}
 
-	public void setImg(MultipartFile img)
-	{
+	public void setImg(MultipartFile img) {
 		this.img = img;
 	}
 
-	public void convertDtoToEntity(Task taskEntity) throws Exception
-	{
-		if (taskEntity != null)
-		{
+	public Boolean getState() {
+		return state;
+	}
+
+	public void setState(Boolean state) {
+		this.state = state;
+	}
+
+	public String getNameImg() {
+		return nameImg;
+	}
+
+	public void setNameImg(String nameImg) {
+		this.nameImg = nameImg;
+	}
+
+	public void convertDtoToEntity(Task taskEntity) throws Exception {
+		if (taskEntity != null) {
 			taskEntity.setUserName(getUserName());
 			taskEntity.setUserEmail(getUserEmail());
 			taskEntity.setDescription(getDescription());
-			taskEntity.setImg(getImg().getBytes());
-
+			taskEntity.setState(getState()!= null && getState() ? 1 : 0);
+			if (taskEntity.getImg() == null)
+				taskEntity.setImg(getImg() != null ? getImg().getBytes() : null);
+			taskEntity.setImgName(getNameImg());
 		}
-
 	}
 
-	public void convertEntityToDto(Task taskEntity)
-	{
-		if (taskEntity != null)
-		{
+	public void convertEntityToDto(Task taskEntity) {
+		if (taskEntity != null) {
 			setUserName(taskEntity.getUserName());
 			setUserEmail(taskEntity.getUserEmail());
 			setDescription(taskEntity.getDescription());
-			//MultipartFile file = new 
-			//setImg(taskEntity.getImg());
+			setNameImg(taskEntity.getImgName());
+			
+			// MultipartFile file = new
+			// setImg(taskEntity.getImg());
 		}
 
 	}
-	
+
 }

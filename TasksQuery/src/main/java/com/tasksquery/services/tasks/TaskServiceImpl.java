@@ -16,39 +16,32 @@ import com.tasksquery.repositories.TaskRepository;
 
 @Service
 @Transactional
-public class TaskServiceImpl implements TaskService
-{
+public class TaskServiceImpl implements TaskService {
 	@Autowired
 	private TaskRepository repository;
 
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Override
-	public void saveTask(Task task)
-	{
+	public void saveTask(Task task) {
 		repository.save(task);
-
 	}
 
 	@Override
-	public void deleteTask(Task task)
-	{
+	public void deleteTask(Task task) {
 		repository.delete(task);
-
 	}
 
 	@Autowired
 	TaskRepository rep;
 
 	@Override
-	public Page<Task> getPageTasks(Pageable pageable)
-	{
+	public Page<Task> getPageTasks(Pageable pageable) {
 		return repository.findAll(pageable);
 	}
 
 	@Override
-	public Task getTaskById(Integer taskId)
-	{
+	public Task getTaskById(Integer taskId) {
 		Optional<Task> result = repository.findById(taskId);
 		return result.isPresent() ? result.get() : null;
 	}

@@ -23,6 +23,12 @@
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
+    
+    <listener>
+		<listener-class>
+			org.apache.commons.fileupload.servlet.FileCleanerCleanup
+		</listener-class>
+	</listener>
      
      
     <!-- Spring Configuration - Processes Application Requests -->
@@ -35,6 +41,7 @@
         </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
+    
     
 
     
