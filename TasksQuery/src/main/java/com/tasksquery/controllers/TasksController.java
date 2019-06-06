@@ -13,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.converter.FormHttpMessageConverter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -90,13 +91,18 @@ public class TasksController extends BaseController
 
 		service.saveTask(taskEntity);
 
+		String filePath = String.format("%s/%s", propertyValue, taskEntity.getImgName());
+		if (!new File(filePath).exists())
+			ImgUtils.saveImg(taskEntity.getImg(), filePath);
+
 		return "redirect:/tasksQuery";
 	}
 
 	@RequestMapping(value = {
 			"/taskView"
 	}, method = RequestMethod.GET)
-	public ModelAndView taskView(@RequestParam(name = "id", required = true) Integer id, HttpServletRequest req) throws IOException
+	public ModelAndView taskView(@RequestParam(name = "id", required = true) Integer id, HttpServletRequest req)
+			throws IOException
 	{
 		ModelAndView model = new ModelAndView();
 		model.setViewName("taskView");
@@ -106,11 +112,8 @@ public class TasksController extends BaseController
 			model.addObject("error", "Task was not found");
 		else
 		{
-			
-			String filePath = String.format("%s/%s", propertyValue, taskEntity.getImgName());
-			if(!new File(filePath).exists())
-				ImgUtils.saveImg(taskEntity.getImg(), filePath);
-			String imgPath = String.format("imgs/%s",  taskEntity.getImgName());
+
+			String imgPath = String.format("imgs/%s", taskEntity.getImgName());
 			model.addObject("imgPath", imgPath);
 
 			TaskDTO taskDto = new TaskDTO();
@@ -138,4 +141,26 @@ public class TasksController extends BaseController
 		}
 		return null;
 	}
+
+	@RequestMapping(value = {
+			"/submitTask"
+	}, method = RequestMethod.POST)
+	public @ResponseBody Object submitTask(@RequestParam("id") Integer id, 
+			@RequestParam("description") String description, @RequestParam("submited") Boolean submited)
+	{
+
+		// JsonbHttpMessageConverter, FormHttpMessageConverter m,
+		Task taskEntity = service.getTaskById(id);
+		if (taskEntity == null)
+			System.out.println("Task was not found");
+		else
+		{
+			taskEntity.setDescription(description);
+			taskEntity.setState(submited != null && submited ? 1 : 0 );
+			TaskDTO taskDto = new TaskDTO();
+			taskDto.convertEntityToDto(taskEntity);
+		}
+		return "tasksQuery";
+	}
+
 }

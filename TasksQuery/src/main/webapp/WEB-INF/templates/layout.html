@@ -1,6 +1,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:fragment="page">
 	<head>
-	    <title text="Tasks Query">Title</title>
+	    <title>Tasks Query</title>
 	
 	    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=10" />
@@ -10,7 +10,7 @@
 	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	    <script type="text/javascript">
 		    function isnull(obj) {
-		        return typeof(obj) == 'undefined' || obj == null || obj == '';
+		        return typeof(obj) == 'undefined' || obj == null;
 		    }
 		    
 		    function nvl(obj, def) {
@@ -22,7 +22,7 @@
 	</head>
 	<body>
 		<div>
-			<h1>Tasks Query</h1>
+			<h1><a href="/">Tasks Query</a></h1>
 			<table id="layout">
 				<tr>
 					<td colspan="3"  style="text-align:-webkit-right">

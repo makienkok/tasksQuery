@@ -8,10 +8,10 @@
     
   	//thymeleaf to javascript variables
     /*<![CDATA[*/
-    var sortProperty = /*[[${sortProperty}]]*/ null;
-    var sortDesc = /*[[${sortDesc}]]*/ null;
-    var currentPage = /*[[${page.number}]]*/ 0;
-    var pageSize =/*[[${page.size}]]*/ 0;
+	    var sortProperty = /*[[${sortProperty}]]*/ null;
+	    var sortDesc = /*[[${sortDesc}]]*/ null;
+	    var currentPage = /*[[${page.number}]]*/ 0;
+	    var pageSize =/*[[${page.size}]]*/ 0;
     /*]]>*/
 
     $(document).ready(function()
@@ -57,6 +57,7 @@
 	        <th data-sort-prop="description">Description</th>
 	        <th data-sort-prop="id">Img</th>
 	        <th data-sort-prop="id">view</th>
+	        <th data-sort-prop="id">State</th>
 	    </tr>
 	    </thead>
 	    <tr th:each="task : ${page.content}">
@@ -65,6 +66,7 @@
 	        <td th:text="${task.userEmail}"></td>
 	        <td th:text="${task.description}"></td>
 	        <td th:text="${task.img}"></td>
+	        <td th:text="${task.state}"></td>
 	        <td>
 	        	<a th:href="@{/taskView(id=${task.id})}">View</a>
 	        </td>

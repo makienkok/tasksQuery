@@ -2,15 +2,44 @@
 	<div th:replace=":: content" style="width: 100%;"></div>
 </th:block>
 
-	<div th:fragment="content" style="width: 100%;">
+
+<div th:fragment="content" style="width: 100%;">
+
+<script type="text/javascript">
+	function submitTask(taskid, description, submited)
+	{
+		$.ajax({
+			  type: "POST",
+			  url: "/submitTask",
+			  data: {
+				  "id":taskid.html(),
+				  "description":description.val(),
+				  "submited" : submited.is(":checked"),
+				  },
+			  success: function(resp)
+			  {
+				  if(resp = "tasksQuery")
+				  	window.location = "tasksQuery"
+			  }
+			});
+	}
+</script>
+		<div th:switch="${username}">
+			<div th:case="'admin'">
+				<div> Admin </div>
+			</div>
+			<div th:case="*">
+				<div > Usual value</div>
+			</div>
+		</div>
 
 		<head>
 			<title>Preview task</title>
 		</head>
 		<body>
-		<h2>Task</h2>
-		</body>
+			<h2>Task</h2>
 			<div>
+				<div th:text="${task.id}" id="idTask" />
 				<table>
 					<tr>
 						<td>
@@ -25,7 +54,7 @@
 							<th:label>Email</th:label>
 						</td>
 						<td>
-							 <div th:text="${task.userEmail}" id="emailV" /> <br />
+							 <div th:text="${task.userEmail}" id="emailV" />
 						</td>
 					</tr>
 					<tr>
@@ -33,7 +62,12 @@
 							<th:label>Description</th:label>
 						</td>
 						<td>
-							<textarea rows="20" cols="80" id="descriptionV" th:text="${task.description}"/>
+							<th:block th:if="${username == 'admin'}">
+								<textarea rows="20" cols="80" id="descriptionV" th:text="${task.description}"/>
+							</th:block>
+							<th:block th:if="${username != 'admin'}">
+								<textarea readonly rows="20" cols="80" id="descriptionV" th:text="${task.description}"/>
+							</th:block>
 						</td>
 					</tr>
 					<tr>
@@ -44,13 +78,31 @@
 							<img th:src="${imgPath}" id="imgV" />
 						</td>
 					</tr>
-					<tr>
-						<td colspan="2">
-							<button type="submit" id="save">Save</button>
-						</td>
-					</tr>
+					<th:block th:if="${username == 'admin'}">
+						<tr>
+							<td>
+								<th:label>State</th:label>
+							</td>
+							<td>
+								 <input type="checkbox" id="state" th:checked="${state}" />
+							</td>
+						</tr>
+					</th:block>
+					<th:block th:if="${username == 'admin'}">
+						<tr>
+							<td colspan="2">
+								<button type="button" id="submitTask"  onclick="submitTask($('#idTask'),$('#descriptionV'), $('#state'))">Submit Task</button>
+							</td>
+						</tr>
+					</th:block>
 				</table>
-				</form>
 			</div>
+		</body>
 	</div>
+	
+	
+
+
+
+	
 
