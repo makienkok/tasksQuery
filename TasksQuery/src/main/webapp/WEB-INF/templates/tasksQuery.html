@@ -66,9 +66,11 @@
 	        <td th:text="${task.userEmail}"></td>
 	        <td th:text="${task.description}"></td>
 	        <td th:text="${task.img}"></td>
-	        <td th:text="${task.state}"></td>
 	        <td>
 	        	<a th:href="@{/taskView(id=${task.id})}">View</a>
+	        </td>
+	        <td>
+	        	<input type="checkbox" id="state" th:checked="${task.state}" disabled />
 	        </td>
 	    </tr>
 	</table>

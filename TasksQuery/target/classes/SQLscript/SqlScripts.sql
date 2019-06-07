@@ -13,9 +13,3 @@ create table tasks
 PRIMARY KEY (`id`)
 ) DEFAULT CHARSET=utf8;
 
-INSERT INTO `tasks_query`.`tasks` (`users_name`, `users_email`, `description`, `img`) 
-VALUES ('test', 'test@gmail.com', 'description', ?)
-,('test1', 'test1@gmail.com', 'description1', ?)
-,('test2', 'test2@gmail.com', 'description2', ?)
-,('test3', 'test3@gmail.com', 'description3', ?)
-,('test4', 'test4@gmail.com', 'description4', ?);

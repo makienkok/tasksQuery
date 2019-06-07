@@ -25,7 +25,7 @@
 			<h1><a href="/">Tasks Query</a></h1>
 			<table id="layout">
 				<tr>
-					<td colspan="3"  style="text-align:-webkit-right">
+					<td colspan="2"  style="text-align:-webkit-right">
 						<div th:if="${username == 'admin'}" style="margin: 2px;">
 						    authenticated as <div th:text="${username}"/>
 						    <form th:action="@{/loginPage?logout}" method="post">
@@ -44,9 +44,7 @@
 					<td>
 						<a href="/createTask">Create Task</a>
 					</td>
-					<td>
-						<a href="submitTasks">submit Tasks</a>
-					</td>
+					
 				</tr>
 			</table>
 		</div>

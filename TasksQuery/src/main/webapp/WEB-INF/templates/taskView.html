@@ -5,25 +5,25 @@
 
 <div th:fragment="content" style="width: 100%;">
 
-<script type="text/javascript">
-	function submitTask(taskid, description, submited)
-	{
-		$.ajax({
-			  type: "POST",
-			  url: "/submitTask",
-			  data: {
-				  "id":taskid.html(),
-				  "description":description.val(),
-				  "submited" : submited.is(":checked"),
-				  },
-			  success: function(resp)
-			  {
-				  if(resp = "tasksQuery")
-				  	window.location = "tasksQuery"
-			  }
-			});
-	}
-</script>
+		<script type="text/javascript">
+			function submitTask(taskid, description, submited)
+			{
+				$.ajax({
+					  type: "POST",
+					  url: "/submitTask",
+					  data: {
+						  "id":taskid.html(),
+						  "description":description.val(),
+						  "submited" : submited.is(":checked"),
+						  },
+					  success: function(resp)
+					  {
+						  if(resp = "tasksQuery")
+						  	window.location = "tasksQuery"
+					  }
+					});
+			}
+		</script>
 		<div th:switch="${username}">
 			<div th:case="'admin'">
 				<div> Admin </div>
@@ -39,7 +39,7 @@
 		<body>
 			<h2>Task</h2>
 			<div>
-				<div th:text="${task.id}" id="idTask" />
+				<div th:text="${task.id}" id="idTask" hidden/>
 				<table>
 					<tr>
 						<td>
@@ -84,7 +84,7 @@
 								<th:label>State</th:label>
 							</td>
 							<td>
-								 <input type="checkbox" id="state" th:checked="${state}" />
+								 <input type="checkbox" id="state" th:checked="${task.state}" />
 							</td>
 						</tr>
 					</th:block>

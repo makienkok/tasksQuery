@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -125,31 +126,13 @@ public class TasksController extends BaseController
 	}
 
 	@RequestMapping(value = {
-			"/preViewTask"
-	}, method = RequestMethod.GET)
-	public @ResponseBody Object getPreViewTask(@RequestParam("id") Integer id)
-	{
-
-		// JsonbHttpMessageConverter
-		Task taskEntity = service.getTaskById(id);
-		if (taskEntity == null)
-			System.out.println("Error");// model.addObject("error", "Task was not found");
-		else
-		{
-			TaskDTO taskDto = new TaskDTO();
-			taskDto.convertEntityToDto(taskEntity);
-		}
-		return null;
-	}
-
-	@RequestMapping(value = {
 			"/submitTask"
 	}, method = RequestMethod.POST)
 	public @ResponseBody Object submitTask(@RequestParam("id") Integer id, 
 			@RequestParam("description") String description, @RequestParam("submited") Boolean submited)
 	{
 
-		// JsonbHttpMessageConverter, FormHttpMessageConverter m,
+		// JsonbHttpMessageConverter - for json ; FormHttpMessageConverter - default
 		Task taskEntity = service.getTaskById(id);
 		if (taskEntity == null)
 			System.out.println("Task was not found");
@@ -157,10 +140,27 @@ public class TasksController extends BaseController
 		{
 			taskEntity.setDescription(description);
 			taskEntity.setState(submited != null && submited ? 1 : 0 );
+			service.saveTask(taskEntity);
 			TaskDTO taskDto = new TaskDTO();
 			taskDto.convertEntityToDto(taskEntity);
 		}
 		return "tasksQuery";
+	}
+	
+	@RequestMapping(value = {
+			"/preViewTask"
+	}, method = RequestMethod.POST,  consumes = {"multipart/form-data"})
+	public String getPreViewTask(@ModelAttribute TaskDTO taskDto, Model model) throws Exception
+	{
+		Task task = new Task();
+		taskDto.convertDtoToEntity(task);
+		//Task taskEntity = service.getTaskById(id);
+		TaskDTO t = new TaskDTO();
+		t.setDescription(taskDto.getDescription());
+		t.setUserName(taskDto.getUserName());
+		
+		model.addAttribute("task", t);
+		return "taskView";
 	}
 
 }

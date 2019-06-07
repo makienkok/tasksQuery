@@ -3,9 +3,33 @@
 </th:block>
 
 	<div th:fragment="content" style="width: 100%;">
+		
+		<script type="text/javascript">
+		
+			function previewTask()
+			{
+				var formData = new FormData($("#task")[0]);
+				$.ajax({
+					  type: "POST",
+					  url: "/preViewTask",
+					  data: formData,
+					  success: function(resp)
+					  {
+						  console.log(resp);
+						  $( "#dialog" ).dialog();
+						  $( "#previewContent" ).html(resp);
+						  //if(resp = "taskView")
+						  	//window.location = "tasksQuery"
+					  },
+				        cache: false,
+				        contentType: false,
+				        processData: false
+					});
+			}
+		</script>
 
 		<head>
-			
+			<title>Create Task</title>
 		</head>
 		<body>
 			<h2>Create task</h2>
@@ -59,11 +83,19 @@
 					</div>
 					<tr>
 						<td colspan="2">
+							<button type="button" onclick="previewTask()">Preview a Task</button>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2">
 							<input type="submit" value="submit" />
 						</td>
 					</tr>
 				</table>
 				</form>
+			</div>
+			<div id="dialog">
+				<div id="previewContent"></div>
 			</div>
 		</body>
 	</div>
