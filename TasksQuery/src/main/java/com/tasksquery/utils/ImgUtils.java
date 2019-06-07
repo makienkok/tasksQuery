@@ -13,9 +13,10 @@ import javax.imageio.ImageIO;
 import org.apache.commons.io.FileUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.tasksquery.models.TaskDTO;
+
 public class ImgUtils
 {
-
 	enum ImgExtention
 	{
 		JPG, IMG, PNG;
@@ -23,7 +24,6 @@ public class ImgUtils
 
 	public static boolean checkImgExtention(String imName)
 	{
-
 		for (ImgExtention val : ImgExtention.values())
 			if (imName.indexOf(val.name().toLowerCase()) != -1)
 				return true;
@@ -62,9 +62,32 @@ public class ImgUtils
 
 	}
 
-	public static void saveImg(byte[] arr, String pathFileImg) throws IOException
+	public static byte[] saveImg(TaskDTO taskDTO, Boolean isTmp, String propertyValue) throws Exception
 	{
-		FileUtils.writeByteArrayToFile(new File(pathFileImg), arr);
+		if (taskDTO == null)
+			throw new Exception("Task is not created");
+
+		MultipartFile mpFile = taskDTO.getImg();
+		byte[] resizedImg = null;
+		String nameImg = null;
+
+		if (mpFile != null)
+		{
+			nameImg = mpFile.getOriginalFilename();
+			if (!ImgUtils.checkImgExtention(nameImg))
+				throw new Exception("You have to use picture with extention : png, img, jpg ");
+
+			resizedImg = ImgUtils.resizeImg(mpFile);
+
+			String filePath = String.format("%s/%s", propertyValue, nameImg);
+			if (isTmp)
+				FileUtils.cleanDirectory(new File(propertyValue));
+			if (!isTmp && !new File(filePath).exists())
+				FileUtils.writeByteArrayToFile(new File(filePath), resizedImg);
+
+			taskDTO.setNameImg(nameImg);
+		}
+		return resizedImg;
 	}
 
 	public String getPathImg(byte[] arr)

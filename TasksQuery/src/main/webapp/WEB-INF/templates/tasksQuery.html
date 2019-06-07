@@ -20,7 +20,8 @@
     $("table#tsk-table thead th").each(function()
 	{
         var head = $(this);
-        if(head.attr('data-sort-prop')==sortProperty){
+        if(head.attr('data-sort-prop')==sortProperty)
+        {
             head.append(sortDesc?'▾':'▴');
         }
       });

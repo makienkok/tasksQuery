@@ -13,14 +13,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.converter.FormHttpMessageConverter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -36,9 +34,13 @@ public class TasksController extends BaseController
 
 	@Autowired
 	private TaskService service;
-
+	
 	@Value("${imgsDir}")
 	String propertyValue;
+	
+	@Value("${tmpImgsDir}")
+	String tmpImgsDir;
+
 
 	@RequestMapping(value = {
 			"/tasksQuery"
@@ -58,7 +60,7 @@ public class TasksController extends BaseController
 	}
 
 	@RequestMapping(value = {
-			"/createTask", "editTask"
+			"/createTask"
 	}, method = RequestMethod.GET)
 	public ModelAndView getNewTaskForm(Model model)
 	{
@@ -69,32 +71,17 @@ public class TasksController extends BaseController
 	}
 
 	@RequestMapping(value = {
-			"/createTask", "/submitTasks"
+			"/createTask"
 	}, method = RequestMethod.POST)
 	public String submitNewTask(@ModelAttribute(name = "taskDTO") TaskDTO taskDTO) throws Exception
 	{
-		MultipartFile mpFile = taskDTO.getImg();
-		byte[] resizedImg = null;
-		String nameImg = null;
-		if (taskDTO != null && mpFile != null)
-		{
-			nameImg = mpFile.getOriginalFilename();
-			if (!ImgUtils.checkImgExtention(nameImg))
-				throw new Exception("You have to use picture with extention : png, img, jpg ");
-
-			resizedImg = ImgUtils.resizeImg(mpFile);
-		}
-
 		Task taskEntity = new Task();
-		taskEntity.setImg(resizedImg);
-		taskDTO.setNameImg(nameImg);
+		System.out.println(propertyValue);
+		taskEntity.setImg(ImgUtils.saveImg(taskDTO, false, propertyValue));
+
 		taskDTO.convertDtoToEntity(taskEntity);
 
 		service.saveTask(taskEntity);
-
-		String filePath = String.format("%s/%s", propertyValue, taskEntity.getImgName());
-		if (!new File(filePath).exists())
-			ImgUtils.saveImg(taskEntity.getImg(), filePath);
 
 		return "redirect:/tasksQuery";
 	}
@@ -128,7 +115,7 @@ public class TasksController extends BaseController
 	@RequestMapping(value = {
 			"/submitTask"
 	}, method = RequestMethod.POST)
-	public @ResponseBody Object submitTask(@RequestParam("id") Integer id, 
+	public @ResponseBody Object submitTask(@RequestParam("id") Integer id,
 			@RequestParam("description") String description, @RequestParam("submited") Boolean submited)
 	{
 
@@ -139,27 +126,36 @@ public class TasksController extends BaseController
 		else
 		{
 			taskEntity.setDescription(description);
-			taskEntity.setState(submited != null && submited ? 1 : 0 );
+			taskEntity.setState(submited != null && submited ? 1 : 0);
 			service.saveTask(taskEntity);
 			TaskDTO taskDto = new TaskDTO();
 			taskDto.convertEntityToDto(taskEntity);
 		}
 		return "tasksQuery";
 	}
-	
+
 	@RequestMapping(value = {
 			"/preViewTask"
-	}, method = RequestMethod.POST,  consumes = {"multipart/form-data"})
+	}, method = RequestMethod.POST, consumes = {
+			"multipart/form-data"
+	})
 	public String getPreViewTask(@ModelAttribute TaskDTO taskDto, Model model) throws Exception
 	{
 		Task task = new Task();
 		taskDto.convertDtoToEntity(task);
-		//Task taskEntity = service.getTaskById(id);
-		TaskDTO t = new TaskDTO();
-		t.setDescription(taskDto.getDescription());
-		t.setUserName(taskDto.getUserName());
-		
-		model.addAttribute("task", t);
+
+		TaskDTO taskPreview = new TaskDTO();
+		taskPreview.setUserEmail(taskDto.getUserEmail());
+		taskPreview.setDescription(taskDto.getDescription());
+		taskPreview.setUserName(taskDto.getUserName());
+
+		Task taskEntity = new Task();
+		System.out.println(tmpImgsDir);
+		taskEntity.setImg(ImgUtils.saveImg(taskDto, true, tmpImgsDir));
+
+		taskDto.convertDtoToEntity(taskEntity);
+
+		model.addAttribute("task", taskPreview);
 		return "taskView";
 	}
 
