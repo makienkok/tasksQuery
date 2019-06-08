@@ -148,12 +148,12 @@ public class TasksController extends BaseController
 		taskPreview.setUserEmail(taskDto.getUserEmail());
 		taskPreview.setDescription(taskDto.getDescription());
 		taskPreview.setUserName(taskDto.getUserName());
+		ImgUtils.saveImg(taskDto, true, tmpImgsDir);
+		//taskPreview.setNameImg(taskDto.getNameImg());
+		
+		String imgPath = String.format("tmpImgs/%s", taskDto.getNameImg());
+		model.addAttribute("imgPath", imgPath);
 
-		Task taskEntity = new Task();
-		System.out.println(tmpImgsDir);
-		taskEntity.setImg(ImgUtils.saveImg(taskDto, true, tmpImgsDir));
-
-		taskDto.convertDtoToEntity(taskEntity);
 
 		model.addAttribute("task", taskPreview);
 		return "taskView";

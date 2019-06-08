@@ -82,7 +82,7 @@ public class ImgUtils
 			String filePath = String.format("%s/%s", propertyValue, nameImg);
 			if (isTmp)
 				FileUtils.cleanDirectory(new File(propertyValue));
-			if (!isTmp && !new File(filePath).exists())
+			if (!new File(filePath).exists())
 				FileUtils.writeByteArrayToFile(new File(filePath), resizedImg);
 
 			taskDTO.setNameImg(nameImg);
