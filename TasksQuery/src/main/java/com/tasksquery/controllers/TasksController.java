@@ -34,13 +34,12 @@ public class TasksController extends BaseController
 
 	@Autowired
 	private TaskService service;
-	
+
 	@Value("${imgsDir}")
 	String propertyValue;
-	
+
 	@Value("${tmpImgsDir}")
 	String tmpImgsDir;
-
 
 	@RequestMapping(value = {
 			"/tasksQuery"
@@ -76,7 +75,6 @@ public class TasksController extends BaseController
 	public String submitNewTask(@ModelAttribute(name = "taskDTO") TaskDTO taskDTO) throws Exception
 	{
 		Task taskEntity = new Task();
-		System.out.println(propertyValue);
 		taskEntity.setImg(ImgUtils.saveImg(taskDTO, false, propertyValue));
 
 		taskDTO.convertDtoToEntity(taskEntity);
@@ -149,11 +147,9 @@ public class TasksController extends BaseController
 		taskPreview.setDescription(taskDto.getDescription());
 		taskPreview.setUserName(taskDto.getUserName());
 		ImgUtils.saveImg(taskDto, true, tmpImgsDir);
-		//taskPreview.setNameImg(taskDto.getNameImg());
-		
+
 		String imgPath = String.format("tmpImgs/%s", taskDto.getNameImg());
 		model.addAttribute("imgPath", imgPath);
-
 
 		model.addAttribute("task", taskPreview);
 		return "taskView";

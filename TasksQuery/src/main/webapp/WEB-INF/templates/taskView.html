@@ -75,7 +75,7 @@
 							<th:label>Picture</th:label>
 						</td>
 						<td>
-							<img th:src="${imgPath}" id="imgV" />
+							<img th:src="@{/allimgs/{imgPath}/ (imgPath=${imgPath})}" id="imgV" />
 						</td>
 					</tr>
 					<th:block th:if="${username == 'admin'}">
