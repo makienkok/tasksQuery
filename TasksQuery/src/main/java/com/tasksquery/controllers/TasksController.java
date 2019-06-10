@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,6 +16,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -72,8 +74,11 @@ public class TasksController extends BaseController
 	@RequestMapping(value = {
 			"/createTask"
 	}, method = RequestMethod.POST)
-	public String submitNewTask(@ModelAttribute(name = "taskDTO") TaskDTO taskDTO) throws Exception
+	public String submitNewTask(@Valid @ModelAttribute(name = "taskDTO") TaskDTO taskDTO, BindingResult bindingResult) throws Exception
 	{
+		if(bindingResult.hasErrors())
+			System.out.println("Error");
+		
 		Task taskEntity = new Task();
 		taskEntity.setImg(ImgUtils.saveImg(taskDTO, false, propertyValue));
 
@@ -88,7 +93,7 @@ public class TasksController extends BaseController
 			"/taskView"
 	}, method = RequestMethod.GET)
 	public ModelAndView taskView(@RequestParam(name = "id", required = true) Integer id, HttpServletRequest req)
-			throws IOException
+			throws Exception, IOException
 	{
 		ModelAndView model = new ModelAndView();
 		model.setViewName("taskView");
@@ -137,7 +142,7 @@ public class TasksController extends BaseController
 	}, method = RequestMethod.POST, consumes = {
 			"multipart/form-data"
 	})
-	public String getPreViewTask(@ModelAttribute TaskDTO taskDto, Model model) throws Exception
+	public String getPreViewTask(@ModelAttribute @Valid TaskDTO taskDto, Model model) throws Exception
 	{
 		Task task = new Task();
 		taskDto.convertDtoToEntity(task);
@@ -152,6 +157,7 @@ public class TasksController extends BaseController
 		model.addAttribute("imgPath", imgPath);
 
 		model.addAttribute("task", taskPreview);
+	
 		return "taskView";
 	}
 

@@ -6,6 +6,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "tasks")
@@ -14,13 +16,22 @@ public class Task implements java.io.Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
+	
 	@Column(name = "users_name")
+	@NotNull
+	@Size(min=3, max=300)
 	private String userName;
+	
 	@Column(name = "users_email")
+	@NotNull
+	@Size(min=3, max=100)
 	private String userEmail;
 
+	@NotNull
+	@Size(min=3, max=300)
 	private String description;
 
+	@NotNull
 	private byte[] img;
 
 	private Integer state;

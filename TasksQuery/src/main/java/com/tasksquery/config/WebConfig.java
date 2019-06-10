@@ -3,6 +3,7 @@ package com.tasksquery.config;
 import java.io.File;
 
 import javax.servlet.ServletContext;
+import javax.validation.Validator;
 
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.FileCleanerCleanup;
@@ -15,12 +16,14 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.http.MediaType;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
@@ -32,15 +35,17 @@ import org.thymeleaf.templatemode.TemplateMode;
 @ComponentScan("com.tasksquery")
 public class WebConfig implements WebMvcConfigurer {
 
-	/*
-	 * @Bean(name = "simpleMappingExceptionResolver") public
-	 * SimpleMappingExceptionResolver createSimpleMappingExceptionResolver() {
-	 * SimpleMappingExceptionResolver resolver = new MyMappingExceptionResolver();
-	 * return resolver; }
-	 */
+	
 
 	@Autowired
 	private ApplicationContext applicationContext;
+	
+	@Bean(name = "simpleMappingExceptionResolver")
+    public SimpleMappingExceptionResolver createSimpleMappingExceptionResolver()
+    {
+        SimpleMappingExceptionResolver resolver = new MyMappingExceptionResolver();
+        return resolver;
+    }
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -59,8 +64,6 @@ public class WebConfig implements WebMvcConfigurer {
 		if (!registry.hasMappingForPattern("/tmpImgs/**")) {
 			registry.addResourceHandler("/static/**").addResourceLocations("classpath:/tmpImgs/");
 		}
-		
-		
 	}
 
 	@Bean
@@ -132,4 +135,8 @@ public class WebConfig implements WebMvcConfigurer {
 		return factory;
 	}
 
+	/*
+	 * @Bean public Validator validator() { return new LocalValidatorFactoryBean();
+	 * }
+	 */
 }

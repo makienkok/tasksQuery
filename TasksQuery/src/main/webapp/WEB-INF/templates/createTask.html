@@ -5,24 +5,24 @@
 	<div th:fragment="content" style="width: 100%;">
 		
 		<script type="text/javascript">
-		var theDialog = null;
-		
-		$(document).ready(function()
-		{
-			theDialog = $("#dialog").dialog(opt);
-			theDialog.dialog('close');
-			var opt = {
-			        autoOpen: false,
-			        modal: true,
-			        width: 550,
-			        height:650,
-			        title: 'Preview Task'
-			};
+			var theDialog = null;
 			
-		});	
+			$(document).ready(function()
+			{
+				theDialog = $("#dialog").dialog(opt);
+				theDialog.dialog('close');
+				var opt = {
+				        autoOpen: false,
+				        modal: true,
+				        width: 550,
+				        height:650,
+				        title: 'Preview Task'
+				};
+				
+			});	
+				
 			
-		
-		
+			
 			function previewTask()
 			{
 				var formData = new FormData($("#task")[0]);
@@ -32,6 +32,7 @@
 					  data: formData,
 					  success: function(resp)
 					  {
+						  rr=resp;
 						  console.log(resp);
 						  $( "#previewContent" ).html(resp);
 						  theDialog.dialog('open');
@@ -60,6 +61,7 @@
 						<td>
 							 <input th:type="text" id="name" th:field="*{userName}"/>
 						</td>
+						<td th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}">userName Error</td>
 					</tr>
 					<tr>
 						<td>

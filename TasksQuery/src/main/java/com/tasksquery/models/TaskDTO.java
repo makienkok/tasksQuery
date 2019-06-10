@@ -18,85 +18,68 @@ public class TaskDTO
 
 	private String nameImg;
 
-	public TaskDTO()
-	{
+	public TaskDTO() {
 
 	}
 
-	public Integer getId()
-	{
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(Integer id)
-	{
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public String getUserName()
-	{
+	public String getUserName() {
 		return userName;
 	}
 
-	public void setUserName(String userName)
-	{
+	public void setUserName(String userName) {
 		this.userName = userName;
 	}
 
-	public String getUserEmail()
-	{
+	public String getUserEmail() {
 		return userEmail;
 	}
 
-	public void setUserEmail(String userEmail)
-	{
+	public void setUserEmail(String userEmail) {
 		this.userEmail = userEmail;
 	}
 
-	public String getDescription()
-	{
+	public String getDescription() {
 		return description;
 	}
 
-	public void setDescription(String description)
-	{
+	public void setDescription(String description) {
 		this.description = description;
 	}
 
-	public MultipartFile getImg()
-	{
+	public MultipartFile getImg() {
 		return img;
 	}
 
-	public void setImg(MultipartFile img)
-	{
+	public void setImg(MultipartFile img) {
 		this.img = img;
 	}
 
-	public Boolean getState()
-	{
+	public Boolean getState() {
 		return state;
 	}
 
-	public void setState(Boolean state)
-	{
+	public void setState(Boolean state) {
 		this.state = state;
 	}
 
-	public String getNameImg()
-	{
+	public String getNameImg() {
 		return nameImg;
 	}
 
-	public void setNameImg(String nameImg)
-	{
+	public void setNameImg(String nameImg) {
 		this.nameImg = nameImg;
 	}
 
-	public void convertDtoToEntity(Task taskEntity) throws Exception
-	{
-		if (taskEntity != null)
-		{
+	public void convertDtoToEntity(Task taskEntity) throws Exception {
+		if (taskEntity != null) {
 			taskEntity.setUserName(getUserName());
 			taskEntity.setUserEmail(getUserEmail());
 			taskEntity.setDescription(getDescription());
@@ -107,10 +90,8 @@ public class TaskDTO
 		}
 	}
 
-	public void convertEntityToDto(Task taskEntity)
-	{
-		if (taskEntity != null)
-		{
+	public void convertEntityToDto(Task taskEntity) {
+		if (taskEntity != null) {
 			setId(taskEntity.getId());
 			setUserName(taskEntity.getUserName());
 			setUserEmail(taskEntity.getUserEmail());

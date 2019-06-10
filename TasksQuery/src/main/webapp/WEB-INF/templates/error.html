@@ -1,0 +1,8 @@
+<th:block th:include="layout:: page">
+	<div th:replace=":: content" style="width: 100%;"></div>
+</th:block>
+
+	<div th:fragment="content">
+		<pre th:text="${error}" style="color:red;"></pre>
+	</div>
+
