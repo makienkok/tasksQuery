@@ -17,7 +17,7 @@ public class MyMappingExceptionResolver extends SimpleMappingExceptionResolver {
 	@Override
 	protected ModelAndView doResolveException(HttpServletRequest req, HttpServletResponse resp, Object handler, Exception ex) 
 	{
-
+		System.out.println(ex);
 		ModelAndView mav = null;
 		ModelMap mp = null;
 

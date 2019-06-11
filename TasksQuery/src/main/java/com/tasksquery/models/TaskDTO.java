@@ -1,15 +1,26 @@
 package com.tasksquery.models;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.web.multipart.MultipartFile;
 
 public class TaskDTO
 {
 	private Integer id;
 
+	@NotNull
+	@Size(min = 0, max = 100)
+	@NotBlank
 	private String userName;
 
+	@NotNull
+	@Size(min = 0, max = 100)
 	private String userEmail;
 
+	@NotNull
+	@Size(min = 10, max = 300)
 	private String description;
 
 	private MultipartFile img;
@@ -30,6 +41,7 @@ public class TaskDTO
 		this.id = id;
 	}
 
+	
 	public String getUserName() {
 		return userName;
 	}

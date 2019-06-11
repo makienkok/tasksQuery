@@ -1,6 +1,5 @@
 package com.tasksquery.controllers;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,12 +16,12 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.tasksquery.models.Task;
@@ -74,11 +73,16 @@ public class TasksController extends BaseController
 	@RequestMapping(value = {
 			"/createTask"
 	}, method = RequestMethod.POST)
-	public String submitNewTask(@Valid @ModelAttribute(name = "taskDTO") TaskDTO taskDTO, BindingResult bindingResult) throws Exception
+	public String submitNewTask(@Valid @ModelAttribute(name = "taskDTO") TaskDTO taskDTO, BindingResult bindingResult,
+			Errors errors) throws Exception
 	{
-		if(bindingResult.hasErrors())
+		if (bindingResult.hasErrors())
+		{
 			System.out.println("Error");
-		
+			return "createTask";
+		}
+			
+
 		Task taskEntity = new Task();
 		taskEntity.setImg(ImgUtils.saveImg(taskDTO, false, propertyValue));
 
@@ -103,7 +107,6 @@ public class TasksController extends BaseController
 			model.addObject("error", "Task was not found");
 		else
 		{
-
 			String imgPath = String.format("imgs/%s", taskEntity.getImgName());
 			model.addObject("imgPath", imgPath);
 
@@ -142,7 +145,7 @@ public class TasksController extends BaseController
 	}, method = RequestMethod.POST, consumes = {
 			"multipart/form-data"
 	})
-	public String getPreViewTask(@ModelAttribute @Valid TaskDTO taskDto, Model model) throws Exception
+	public String getPreViewTask(@ModelAttribute TaskDTO taskDto, Model model) throws Exception
 	{
 		Task task = new Task();
 		taskDto.convertDtoToEntity(task);
@@ -157,7 +160,7 @@ public class TasksController extends BaseController
 		model.addAttribute("imgPath", imgPath);
 
 		model.addAttribute("task", taskPreview);
-	
+
 		return "taskView";
 	}
 

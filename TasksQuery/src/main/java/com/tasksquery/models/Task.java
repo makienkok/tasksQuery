@@ -18,17 +18,12 @@ public class Task implements java.io.Serializable {
 	private Integer id;
 	
 	@Column(name = "users_name")
-	@NotNull
-	@Size(min=3, max=300)
 	private String userName;
 	
 	@Column(name = "users_email")
-	@NotNull
-	@Size(min=3, max=100)
 	private String userEmail;
 
 	@NotNull
-	@Size(min=3, max=300)
 	private String description;
 
 	@NotNull

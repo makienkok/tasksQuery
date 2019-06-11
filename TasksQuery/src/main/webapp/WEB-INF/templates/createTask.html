@@ -14,7 +14,7 @@
 				var opt = {
 				        autoOpen: false,
 				        modal: true,
-				        width: 550,
+				        width: 1550,
 				        height:650,
 				        title: 'Preview Task'
 				};
@@ -59,9 +59,11 @@
 							<th:label>Name</th:label>
 						</td>
 						<td>
-							 <input th:type="text" id="name" th:field="*{userName}"/>
+							 <input th:type="text" id="name" th:field="*{userName}" th:errorclass="fieldError" />
 						</td>
-						<td th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}">userName Error</td>
+						<td th:if="${#fields.hasErrors('userName')}">
+							<p th:errors="*{userName}"  th:class="${#fields.hasErrors('userName')}?userName">userName Error</p>
+						</td>
 					</tr>
 					<tr>
 						<td>
