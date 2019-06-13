@@ -22,63 +22,58 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories("com.tasksquery.repositories")
-@PropertySource(value = {
-		"classpath:/confs/application.properties"
-})
+@PropertySource(value = { "classpath:/confs/application.properties" })
 public class HibernateConfig
 {
 
-	@Autowired
-	private Environment environment;
+    @Autowired
+    private Environment environment;
 
-	@Bean(name = "entityManagerFactory")
-	public LocalContainerEntityManagerFactoryBean getEntityManagerFactoryBean()
-	{
-		LocalContainerEntityManagerFactoryBean lcemfb = new LocalContainerEntityManagerFactoryBean();
-		lcemfb.setJpaVendorAdapter(getJpaVendorAdapter());
-		lcemfb.setDataSource(dataSource());
-		lcemfb.setPersistenceUnitName("myJpaPersistenceUnit");
-		lcemfb.setPackagesToScan("com.tasksquery.models");
-		lcemfb.setJpaProperties(hibernateProperties());
-		return lcemfb;
-	}
+    @Bean(name = "entityManagerFactory")
+    public LocalContainerEntityManagerFactoryBean getEntityManagerFactoryBean()
+    {
+        LocalContainerEntityManagerFactoryBean lcemfb = new LocalContainerEntityManagerFactoryBean();
+        lcemfb.setJpaVendorAdapter(getJpaVendorAdapter());
+        lcemfb.setDataSource(dataSource());
+        lcemfb.setPersistenceUnitName("myJpaPersistenceUnit");
+        lcemfb.setPackagesToScan("com.tasksquery.models");
+        lcemfb.setJpaProperties(hibernateProperties());
+        return lcemfb;
+    }
 
-	@Bean
-	public JpaVendorAdapter getJpaVendorAdapter()
-	{
-		JpaVendorAdapter adapter = new HibernateJpaVendorAdapter();
-		return adapter;
-	}
+    @Bean
+    public JpaVendorAdapter getJpaVendorAdapter()
+    {
+        JpaVendorAdapter adapter = new HibernateJpaVendorAdapter();
+        return adapter;
+    }
 
-	@Bean(name = "transactionManager")
-	public PlatformTransactionManager txManager()
-	{
-		JpaTransactionManager jpaTransactionManager = new JpaTransactionManager(
-				getEntityManagerFactoryBean().getObject());
-		return jpaTransactionManager;
-	}
+    @Bean(name = "transactionManager")
+    public PlatformTransactionManager txManager()
+    {
+        JpaTransactionManager jpaTransactionManager = new JpaTransactionManager(getEntityManagerFactoryBean().getObject());
+        return jpaTransactionManager;
+    }
 
-	/************* End Spring JPA config details **************/
+    @Bean
+    public DataSource dataSource()
+    {
+        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+        dataSource.setDriverClassName(environment.getRequiredProperty("jdbc.driver"));
+        dataSource.setUrl(environment.getRequiredProperty("jdbc.url"));
+        dataSource.setUsername(environment.getRequiredProperty("jdbc.username"));
+        dataSource.setPassword(environment.getRequiredProperty("jdbc.password"));
+        return dataSource;
+    }
 
-	@Bean
-	public DataSource dataSource()
-	{
-		DriverManagerDataSource dataSource = new DriverManagerDataSource();
-		dataSource.setDriverClassName(environment.getRequiredProperty("jdbc.driver"));
-		dataSource.setUrl(environment.getRequiredProperty("jdbc.url"));
-		dataSource.setUsername(environment.getRequiredProperty("jdbc.username"));
-		dataSource.setPassword(environment.getRequiredProperty("jdbc.password"));
-		return dataSource;
-	}
-
-	private Properties hibernateProperties()
-	{
-		Properties properties = new Properties();
-		properties.put("hibernate.dialect", environment.getRequiredProperty("hibernate.dialect"));
-		properties.put("hibernate.show_sql", environment.getRequiredProperty("hibernate.show_sql"));
-		properties.put("hibernate.format_sql", environment.getRequiredProperty("hibernate.format_sql"));
-		properties.put("hibernate.hbm2ddl.auto", environment.getRequiredProperty("hibernate.hbm2ddl.auto"));
-		return properties;
-	}
+    private Properties hibernateProperties()
+    {
+        Properties properties = new Properties();
+        properties.put("hibernate.dialect", environment.getRequiredProperty("hibernate.dialect"));
+        properties.put("hibernate.show_sql", environment.getRequiredProperty("hibernate.show_sql"));
+        properties.put("hibernate.format_sql", environment.getRequiredProperty("hibernate.format_sql"));
+        properties.put("hibernate.hbm2ddl.auto", environment.getRequiredProperty("hibernate.hbm2ddl.auto"));
+        return properties;
+    }
 
 }

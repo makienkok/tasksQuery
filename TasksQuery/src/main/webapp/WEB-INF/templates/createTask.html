@@ -6,22 +6,22 @@
 		
 		<script type="text/javascript">
 			var theDialog = null;
+			var opt = {
+			        autoOpen: false,
+			        modal: true,
+			        width: 1300,
+			        height:650,
+			        title: 'Preview Task'
+			};
 			
 			$(document).ready(function()
 			{
+				
 				theDialog = $("#dialog").dialog(opt);
 				theDialog.dialog('close');
-				var opt = {
-				        autoOpen: false,
-				        modal: true,
-				        width: 1550,
-				        height:650,
-				        title: 'Preview Task'
-				};
+				
 				
 			});	
-				
-			
 			
 			function previewTask()
 			{
@@ -59,10 +59,10 @@
 							<th:label>Name</th:label>
 						</td>
 						<td>
-							 <input th:type="text" id="name" th:field="*{userName}" th:errorclass="fieldError" />
+							 <input th:type="text" id="name" th:field="*{userName}"  />
 						</td>
 						<td th:if="${#fields.hasErrors('userName')}">
-							<p th:errors="*{userName}"  th:class="${#fields.hasErrors('userName')}?userName">userName Error</p>
+							<p th:errors="*{userName}" th:errorclass="fielderror">User name has an error</p>
 						</td>
 					</tr>
 					<tr>
@@ -72,6 +72,9 @@
 						<td>
 							 <input th:type="email" id="email" th:field="*{userEmail}" />
 						</td>
+						<td th:if="${#fields.hasErrors('userEmail')}">
+							<p th:errors="*{userEmail}" th:errorclass="fielderror">User email has an error</p>
+						</td>
 					</tr>
 					<tr>
 						<td>
@@ -80,6 +83,9 @@
 						<td>
 							<textarea rows="20" cols="80" id="description" th:field="*{description}" >
 			    			</textarea>
+						</td>
+						<td th:if="${#fields.hasErrors('description')}">
+							<p th:errors="*{description}" th:errorclass="fielderror">Field description has an error</p>
 						</td>
 					</tr>
 					<tr>

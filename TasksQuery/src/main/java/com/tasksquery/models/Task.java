@@ -7,87 +7,101 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "tasks")
-public class Task implements java.io.Serializable {
+public class Task implements java.io.Serializable
+{
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
-	
-	@Column(name = "users_name")
-	private String userName;
-	
-	@Column(name = "users_email")
-	private String userEmail;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
 
-	@NotNull
-	private String description;
+    @Column(name = "users_name")
+    private String userName;
 
-	@NotNull
-	private byte[] img;
+    @Column(name = "users_email")
+    private String userEmail;
 
-	private Integer state;
+    @NotNull
+    private String description;
 
-	@Column(name = "name_img")
-	private String imgName;
+    @NotNull
+    private byte[] img;
 
-	public Integer getId() {
-		return id;
-	}
+    private Integer state;
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    @Column(name = "name_img")
+    private String imgName;
 
-	public String getUserName() {
-		return userName;
-	}
+    public Integer getId()
+    {
+        return id;
+    }
 
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
+    public void setId(Integer id)
+    {
+        this.id = id;
+    }
 
-	public String getUserEmail() {
-		return userEmail;
-	}
+    public String getUserName()
+    {
+        return userName;
+    }
 
-	public void setUserEmail(String userEmail) {
-		this.userEmail = userEmail;
-	}
+    public void setUserName(String userName)
+    {
+        this.userName = userName;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public String getUserEmail()
+    {
+        return userEmail;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public void setUserEmail(String userEmail)
+    {
+        this.userEmail = userEmail;
+    }
 
-	public byte[] getImg() {
-		return img;
-	}
+    public String getDescription()
+    {
+        return description;
+    }
 
-	public void setImg(byte[] img) {
-		this.img = img;
-	}
+    public void setDescription(String description)
+    {
+        this.description = description;
+    }
 
-	public Integer getState() {
-		return state;
-	}
+    public byte[] getImg()
+    {
+        return img;
+    }
 
-	public void setState(Integer state) {
-		this.state = state;
-	}
+    public void setImg(byte[] img)
+    {
+        this.img = img;
+    }
 
-	public String getImgName() {
-		return imgName;
-	}
+    public Integer getState()
+    {
+        return state;
+    }
 
-	public void setImgName(String imgName) {
-		this.imgName = imgName;
-	}
+    public void setState(Integer state)
+    {
+        this.state = state;
+    }
+
+    public String getImgName()
+    {
+        return imgName;
+    }
+
+    public void setImgName(String imgName)
+    {
+        this.imgName = imgName;
+    }
 
 }

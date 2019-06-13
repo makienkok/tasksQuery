@@ -17,81 +17,82 @@ import com.tasksquery.models.TaskDTO;
 
 public class ImgUtils
 {
-	enum ImgExtention
-	{
-		JPG, IMG, PNG;
-	}
+    enum ImgExtention
+    {
+        JPG, IMG, PNG;
+    }
 
-	public static boolean checkImgExtention(String imName)
-	{
-		for (ImgExtention val : ImgExtention.values())
-			if (imName.indexOf(val.name().toLowerCase()) != -1)
-				return true;
-		return false;
-	}
+    public static boolean checkImgExtention(String imName)
+    {
+        for (ImgExtention val : ImgExtention.values())
+            if (imName.indexOf(val.name().toLowerCase()) != -1)
+                return true;
+        return false;
+    }
 
-	final static Integer IMG_HEIGHT = 240;
-	final static Integer IMG_WIDTH = 320;
+    final static Integer IMG_HEIGHT = 240;
 
-	public static byte[] resizeImg(MultipartFile mpFile) throws IOException
-	{
+    final static Integer IMG_WIDTH = 320;
 
-		InputStream io = new ByteArrayInputStream(mpFile.getBytes());
-		BufferedImage inputImage = ImageIO.read(io);
+    public static byte[] resizeImg(MultipartFile mpFile) throws IOException
+    {
 
-		if (inputImage.getWidth() == IMG_WIDTH || inputImage.getHeight() == IMG_HEIGHT)
-			return null;
+        InputStream io = new ByteArrayInputStream(mpFile.getBytes());
+        BufferedImage inputImage = ImageIO.read(io);
 
-		BufferedImage outputImage = new BufferedImage(IMG_WIDTH, IMG_HEIGHT, inputImage.getType());
+        if (inputImage.getWidth() == IMG_WIDTH || inputImage.getHeight() == IMG_HEIGHT)
+            return null;
 
-		Graphics2D g2d = outputImage.createGraphics();
-		g2d.drawImage(inputImage, 0, 0, IMG_WIDTH, IMG_HEIGHT, null);
-		g2d.dispose();
+        BufferedImage outputImage = new BufferedImage(IMG_WIDTH, IMG_HEIGHT, inputImage.getType());
 
-		String typeFile = ImgExtention.JPG.name().toLowerCase();
-		for (ImgExtention val : ImgExtention.values())
-			if (mpFile.getContentType().indexOf(val.name().toLowerCase()) != -1)
-				typeFile = val.name().toLowerCase();
+        Graphics2D g2d = outputImage.createGraphics();
+        g2d.drawImage(inputImage, 0, 0, IMG_WIDTH, IMG_HEIGHT, null);
+        g2d.dispose();
 
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		ImageIO.write(outputImage, typeFile, baos);
-		baos.flush();
-		byte[] resizedImg = baos.toByteArray();
-		baos.close();
-		return resizedImg;
+        String typeFile = ImgExtention.JPG.name().toLowerCase();
+        for (ImgExtention val : ImgExtention.values())
+            if (mpFile.getContentType().indexOf(val.name().toLowerCase()) != -1)
+                typeFile = val.name().toLowerCase();
 
-	}
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ImageIO.write(outputImage, typeFile, baos);
+        baos.flush();
+        byte[] resizedImg = baos.toByteArray();
+        baos.close();
+        return resizedImg;
 
-	public static byte[] saveImg(TaskDTO taskDTO, Boolean isTmp, String propertyValue) throws Exception
-	{
-		if (taskDTO == null)
-			throw new Exception("Task is not created");
+    }
 
-		MultipartFile mpFile = taskDTO.getImg();
-		byte[] resizedImg = null;
-		String nameImg = null;
+    public static byte[] saveImg(TaskDTO taskDTO, Boolean isTmp, String propertyValue) throws Exception
+    {
+        if (taskDTO == null)
+            throw new Exception("Task is not created");
 
-		if (mpFile != null)
-		{
-			nameImg = mpFile.getOriginalFilename();
-			if (!ImgUtils.checkImgExtention(nameImg))
-				throw new Exception("You have to use picture with extention : png, img, jpg ");
+        MultipartFile mpFile = taskDTO.getImg();
+        byte[] resizedImg = null;
+        String nameImg = null;
 
-			resizedImg = ImgUtils.resizeImg(mpFile);
+        if (mpFile != null)
+        {
+            nameImg = mpFile.getOriginalFilename();
+            if (!ImgUtils.checkImgExtention(nameImg))
+                throw new Exception("You have to use picture with extention : png, img, jpg ");
 
-			String filePath = String.format("%s/%s", propertyValue, nameImg);
-			if (isTmp)
-				FileUtils.cleanDirectory(new File(propertyValue));
-			if (!new File(filePath).exists())
-				FileUtils.writeByteArrayToFile(new File(filePath), resizedImg);
+            resizedImg = ImgUtils.resizeImg(mpFile);
 
-			taskDTO.setNameImg(nameImg);
-		}
-		return resizedImg;
-	}
+            String filePath = String.format("%s/%s", propertyValue, nameImg);
+            if (isTmp)
+                FileUtils.cleanDirectory(new File(propertyValue));
+            if (!new File(filePath).exists())
+                FileUtils.writeByteArrayToFile(new File(filePath), resizedImg);
 
-	public String getPathImg(byte[] arr)
-	{
-		return null;
-	}
+            taskDTO.setNameImg(nameImg);
+        }
+        return resizedImg;
+    }
+
+    public String getPathImg(byte[] arr)
+    {
+        return null;
+    }
 }

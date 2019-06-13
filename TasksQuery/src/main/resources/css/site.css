@@ -43,12 +43,21 @@ table#tsk-table
 {
 	user-select: none;
 }
+
 .pagination-div span
 {
 	border-radius:3px;border:1px solid #999;
     padding:5px;margin:10px 0px 0px 10px;display:inline-block
 }
+
 span.selected
 {
 	background:#ccf;
+}
+
+.fielderror {
+    color: red;
+    font-size: 17px;
+    text-align: left;
+    padding: 10px;
 }

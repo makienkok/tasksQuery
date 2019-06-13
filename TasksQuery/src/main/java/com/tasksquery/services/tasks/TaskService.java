@@ -8,12 +8,12 @@ import com.tasksquery.models.Task;
 public interface TaskService
 {
 
-	Page<Task> getPageTasks(Pageable pageable);
+    Page<Task> getPageTasks(Pageable pageable);
 
-	void saveTask(Task task);
+    void saveTask(Task task);
 
-	void deleteTask(Task task);
+    void deleteTask(Task task);
 
-	Task getTaskById(Integer taskId);
+    Task getTaskById(Integer taskId);
 
 }

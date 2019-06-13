@@ -33,135 +33,118 @@ import com.tasksquery.utils.ImgUtils;
 public class TasksController extends BaseController
 {
 
-	@Autowired
-	private TaskService service;
+    @Autowired
+    private TaskService service;
 
-	@Value("${imgsDir}")
-	String propertyValue;
+    @Value("${imgsDir}")
+    String propertyValue;
 
-	@Value("${tmpImgsDir}")
-	String tmpImgsDir;
+    @Value("${tmpImgsDir}")
+    String tmpImgsDir;
 
-	@RequestMapping(value = {
-			"/tasksQuery"
-	}, method = RequestMethod.GET)
-	public String listTasks(@PageableDefault(size = 3, sort = "id") Pageable pageable, Model model)
-	{
-		Page<Task> page = service.getPageTasks(pageable);
-		List<Sort.Order> sortOrders = page.getSort().stream().collect(Collectors.toList());
-		if (sortOrders.size() > 0)
-		{
-			Sort.Order order = sortOrders.get(0);
-			model.addAttribute("sortProperty", order.getProperty());
-			model.addAttribute("sortDesc", order.getDirection() == Sort.Direction.DESC);
-		}
-		model.addAttribute("page", page);
-		return "tasksQuery";
-	}
+    @RequestMapping(value = { "/tasksQuery" }, method = RequestMethod.GET)
+    public String listTasks(@PageableDefault(size = 3, sort = "id") Pageable pageable, Model model)
+    {
+        Page<Task> page = service.getPageTasks(pageable);
+        List<Sort.Order> sortOrders = page.getSort().stream().collect(Collectors.toList());
+        if (sortOrders.size() > 0)
+        {
+            Sort.Order order = sortOrders.get(0);
+            model.addAttribute("sortProperty", order.getProperty());
+            model.addAttribute("sortDesc", order.getDirection() == Sort.Direction.DESC);
+        }
+        model.addAttribute("page", page);
+        return "tasksQuery";
+    }
 
-	@RequestMapping(value = {
-			"/createTask"
-	}, method = RequestMethod.GET)
-	public ModelAndView getNewTaskForm(Model model)
-	{
-		model.addAttribute("taskDTO", new TaskDTO());
-		ModelAndView modelView = new ModelAndView();
-		modelView.setViewName("createTask");
-		return modelView;
-	}
+    @RequestMapping(value = { "/createTask" }, method = RequestMethod.GET)
+    public ModelAndView getNewTaskForm(Model model)
+    {
+        model.addAttribute("taskDTO", new TaskDTO());
+        ModelAndView modelView = new ModelAndView();
+        modelView.setViewName("createTask");
+        return modelView;
+    }
 
-	@RequestMapping(value = {
-			"/createTask"
-	}, method = RequestMethod.POST)
-	public String submitNewTask(@Valid @ModelAttribute(name = "taskDTO") TaskDTO taskDTO, BindingResult bindingResult,
-			Errors errors) throws Exception
-	{
-		if (bindingResult.hasErrors())
-		{
-			System.out.println("Error");
-			return "createTask";
-		}
-			
+    @RequestMapping(value = { "/createTask" }, method = RequestMethod.POST)
+    public String submitNewTask(@Valid @ModelAttribute(name = "taskDTO") TaskDTO taskDTO, BindingResult bindingResult,
+            Errors errors) throws Exception
+    {
+        if (bindingResult.hasErrors())
+        {
+            return "createTask";
+        }
 
-		Task taskEntity = new Task();
-		taskEntity.setImg(ImgUtils.saveImg(taskDTO, false, propertyValue));
+        Task taskEntity = new Task();
+        taskEntity.setImg(ImgUtils.saveImg(taskDTO, false, propertyValue));
 
-		taskDTO.convertDtoToEntity(taskEntity);
+        taskDTO.convertDtoToEntity(taskEntity);
 
-		service.saveTask(taskEntity);
+        service.saveTask(taskEntity);
 
-		return "redirect:/tasksQuery";
-	}
+        return "redirect:/tasksQuery";
+    }
 
-	@RequestMapping(value = {
-			"/taskView"
-	}, method = RequestMethod.GET)
-	public ModelAndView taskView(@RequestParam(name = "id", required = true) Integer id, HttpServletRequest req)
-			throws Exception, IOException
-	{
-		ModelAndView model = new ModelAndView();
-		model.setViewName("taskView");
+    @RequestMapping(value = { "/taskView" }, method = RequestMethod.GET)
+    public ModelAndView taskView(@RequestParam(name = "id", required = true) Integer id, HttpServletRequest req)
+            throws Exception, IOException
+    {
+        ModelAndView model = new ModelAndView();
+        model.setViewName("taskView");
 
-		Task taskEntity = service.getTaskById(id);
-		if (taskEntity == null)
-			model.addObject("error", "Task was not found");
-		else
-		{
-			String imgPath = String.format("imgs/%s", taskEntity.getImgName());
-			model.addObject("imgPath", imgPath);
+        Task taskEntity = service.getTaskById(id);
+        if (taskEntity == null)
+            model.addObject("error", "Task was not found");
+        else
+        {
+            String imgPath = String.format("imgs/%s", taskEntity.getImgName());
+            model.addObject("imgPath", imgPath);
 
-			TaskDTO taskDto = new TaskDTO();
-			taskDto.convertEntityToDto(taskEntity);
-			model.addObject("task", taskDto);
-		}
+            TaskDTO taskDto = new TaskDTO();
+            taskDto.convertEntityToDto(taskEntity);
+            model.addObject("task", taskDto);
+        }
 
-		return model;
-	}
+        return model;
+    }
 
-	@RequestMapping(value = {
-			"/submitTask"
-	}, method = RequestMethod.POST)
-	public @ResponseBody Object submitTask(@RequestParam("id") Integer id,
-			@RequestParam("description") String description, @RequestParam("submited") Boolean submited)
-	{
+    @RequestMapping(value = { "/submitTask" }, method = RequestMethod.POST)
+    public @ResponseBody Object submitTask(@RequestParam("id") Integer id, @RequestParam("description") String description,
+            @RequestParam("submited") Boolean submited)
+    {
 
-		// JsonbHttpMessageConverter - for json ; FormHttpMessageConverter - default
-		Task taskEntity = service.getTaskById(id);
-		if (taskEntity == null)
-			System.out.println("Task was not found");
-		else
-		{
-			taskEntity.setDescription(description);
-			taskEntity.setState(submited != null && submited ? 1 : 0);
-			service.saveTask(taskEntity);
-			TaskDTO taskDto = new TaskDTO();
-			taskDto.convertEntityToDto(taskEntity);
-		}
-		return "tasksQuery";
-	}
+        Task taskEntity = service.getTaskById(id);
+        if (taskEntity == null)
+            System.out.println("Task was not found");
+        else
+        {
+            taskEntity.setDescription(description);
+            taskEntity.setState(submited != null && submited ? 1 : 0);
+            service.saveTask(taskEntity);
+            TaskDTO taskDto = new TaskDTO();
+            taskDto.convertEntityToDto(taskEntity);
+        }
+        return "tasksQuery";
+    }
 
-	@RequestMapping(value = {
-			"/preViewTask"
-	}, method = RequestMethod.POST, consumes = {
-			"multipart/form-data"
-	})
-	public String getPreViewTask(@ModelAttribute TaskDTO taskDto, Model model) throws Exception
-	{
-		Task task = new Task();
-		taskDto.convertDtoToEntity(task);
+    @RequestMapping(value = { "/preViewTask" }, method = RequestMethod.POST, consumes = { "multipart/form-data" })
+    public String getPreViewTask(@ModelAttribute TaskDTO taskDto, Model model) throws Exception
+    {
+        Task task = new Task();
+        taskDto.convertDtoToEntity(task);
 
-		TaskDTO taskPreview = new TaskDTO();
-		taskPreview.setUserEmail(taskDto.getUserEmail());
-		taskPreview.setDescription(taskDto.getDescription());
-		taskPreview.setUserName(taskDto.getUserName());
-		ImgUtils.saveImg(taskDto, true, tmpImgsDir);
+        TaskDTO taskPreview = new TaskDTO();
+        taskPreview.setUserEmail(taskDto.getUserEmail());
+        taskPreview.setDescription(taskDto.getDescription());
+        taskPreview.setUserName(taskDto.getUserName());
+        ImgUtils.saveImg(taskDto, true, tmpImgsDir);
 
-		String imgPath = String.format("tmpImgs/%s", taskDto.getNameImg());
-		model.addAttribute("imgPath", imgPath);
+        String imgPath = String.format("tmpImgs/%s", taskDto.getNameImg());
+        model.addAttribute("imgPath", imgPath);
 
-		model.addAttribute("task", taskPreview);
+        model.addAttribute("task", taskPreview);
 
-		return "taskView";
-	}
+        return "taskInfo";
+    }
 
 }

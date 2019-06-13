@@ -8,21 +8,22 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-public class LoginController extends BaseController 
+public class LoginController extends BaseController
 {
 
-	@RequestMapping(value = "/loginPage", method = RequestMethod.GET)
-	public ModelAndView loginPage(Model model, @RequestParam(value = "error", required = false) String error)
-	{
+    @RequestMapping(value = "/loginPage", method = RequestMethod.GET)
+    public ModelAndView loginPage(Model model, @RequestParam(value = "error", required = false) String error)
+    {
 
-		ModelAndView modelView = new ModelAndView();
+        ModelAndView modelView = new ModelAndView();
 
-		if (error != null) {
-			modelView.addObject("error", "Invalid Credentials provided.");
-		}
+        if (error != null)
+        {
+            modelView.addObject("error", "Invalid Credentials provided.");
+        }
 
-		modelView.setViewName("loginPage");
-		return modelView;
-	}
+        modelView.setViewName("loginPage");
+        return modelView;
+    }
 
 }

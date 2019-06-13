@@ -16,32 +16,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
 {
 
     @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception 
-    {        
-        auth.inMemoryAuthentication().withUser("admin")
-        	.password(passwordEncoder().encode("123")).roles("ADMIN");
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception
+    {
+        auth.inMemoryAuthentication().withUser("admin").password(passwordEncoder().encode("123")).roles("ADMIN");
     }
- 
+
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        
-        http.authorizeRequests()
-				.antMatchers("/tasksQuery", "/welcome", "/createTask")
-				.access("hasRole('ADMIN') or hasRole('ANONYMOUS')") 
-		.antMatchers("/submitTasks").access("hasRole('ADMIN')")
-		.and()
-			.formLogin().loginPage("/loginPage")
-			.defaultSuccessUrl("/tasksQuery")
-			.failureUrl("/loginPage?error")
-			.usernameParameter("username").passwordParameter("password")				
-		.and()
-			.logout().logoutSuccessUrl("/loginPage?logout"); 
-        
+    protected void configure(HttpSecurity http) throws Exception
+    {
+
+        http.authorizeRequests().antMatchers("/tasksQuery", "/welcome", "/createTask")
+                .access("hasRole('ADMIN') or hasRole('ANONYMOUS')").antMatchers("/submitTasks").access("hasRole('ADMIN')").and()
+                .formLogin().loginPage("/loginPage").defaultSuccessUrl("/tasksQuery").failureUrl("/loginPage?error")
+                .usernameParameter("username").passwordParameter("password").and().logout().logoutSuccessUrl("/loginPage?logout");
+
         http.cors().and().csrf().disable();
     }
- 
+
     @Bean
-    public PasswordEncoder passwordEncoder() {
+    public PasswordEncoder passwordEncoder()
+    {
         return new BCryptPasswordEncoder();
     }
 }
