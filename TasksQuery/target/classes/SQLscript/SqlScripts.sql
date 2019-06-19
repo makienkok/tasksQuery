@@ -1,6 +1,7 @@
 
 CREATE DATABASE tasks_query CHARACTER SET utf8 COLLATE utf8_general_ci; 
 
+use `tasks_query`;
 create table tasks
 (
 `id` int(10) NOT NULL AUTO_INCREMENT,
